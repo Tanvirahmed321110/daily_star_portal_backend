@@ -28,7 +28,7 @@
 
                         <!-- Profile Dropdown Here -->
                         <div class="profile-dropdown">
-                            <div class="avater-name">FH</div>
+                            <div class="avater-name" t-esc="initials"></div>
 
                             <!-- Dropdown -->
                             <div class="profile-menu">
@@ -93,21 +93,23 @@
 
                 <!--==================||  Main Form Here  ||====================-->
                 <form action="#" method="post" id="requisitionForm" class="form-card">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
                     <div class="form-top">
                         <div class="field-group">
                             <label>SL Number</label>
-                            <div class="sl-badge">REQ-2026-00847</div>
+                            <div class="sl-badge" t-esc="requisition.name"></div>
                         </div>
                         <div class="field-group">
                             <label>Date</label>
-                            <input type="date" id="reqDate" value="2026-05-05" readonly="readonly"/>
+                            <input type="date" id="reqDate" t-att-value="today" readonly="readonly"/>
                         </div>
                         <div class="field-group">
                             <label>Priority</label>
                             <div class="priority-group">
-                                <div class="priority-btn high">🟢 High</div>
-                                <div class="priority-btn medium">🟡 Medium</div>
-                                <div class="priority-btn low active">🔴 Low</div>
+                                <div class="priority-btn ">🟢 High</div>
+                                <div class="priority-btn ">🟡 Medium</div>
+                                <div class="priority-btn  active">🔴 Low</div>
                             </div>
                         </div>
                     </div>
@@ -224,6 +226,10 @@
             </div> -->
         </div>
 
+
+        <script src="/purchase_requisition_tds/static/src/js/app.js">
+
+        </script>
     </template>
 </odoo>
 

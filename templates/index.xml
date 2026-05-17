@@ -137,33 +137,14 @@
                                 <td>
                                     <select class="product-category">
                                         <option value="">Select product...</option>
-                                        <option value="HP LaserJet Toner" selected="selected">HP LaserJet Toner</option>
-                                        <option value="Wireless Keyboard">Wireless Keyboard</option>
-                                        <option value="USB-C Hub">USB-C Hub</option>
-                                        <option value="Monitor Stand">Monitor Stand</option>
+                                        <t t-foreach="products" t-as="product">
+                                           <option t-att-value="product.id"  t-esc="product.name">HP LaserJet Toner</option>
+                                        </t>
                                     </select>
                                 </td>
                                 <td><input type="text" class="product-name" placeholder="Product Name"
                                         value="HP LaserJet Toner"/></td>
                                 <td><input type="number" class="quantity" value="2" min="1"/> </td>
-                                <td><input type="date" class="required-date" value="2026-05-05"/></td>
-                                <td><input type="text" class="remarks" placeholder="Additional notes..."/></td>
-                            </tr>
-                            <!-- single line here vai -->
-                            <tr>
-                                <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:12px;">02
-                                </td>
-                                <td>
-                                    <select class="product-category">
-                                        <option value="">Select product...</option>
-                                        <option value="HP LaserJet Toner">HP LaserJet Toner</option>
-                                        <option value="Wireless Keyboard" selected="selected">Wireless Keyboard</option>
-                                        <option value="USB-C Hub">USB-C Hub</option>
-                                    </select>
-                                </td>
-                                <td><input type="text" class="product-name" placeholder="Product Name"
-                                        value="Wireless Keyboard"/></td>
-                                <td><input type="number" class="quantity" value="5" min="1"/></td>
                                 <td><input type="date" class="required-date" value="2026-05-05"/></td>
                                 <td><input type="text" class="remarks" placeholder="Additional notes..."/></td>
                             </tr>

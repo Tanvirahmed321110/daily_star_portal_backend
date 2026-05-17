@@ -22,9 +22,11 @@ class RequisitionPortal(http.Controller):
             initials = words[0][0].upper() if words else ''
 
         requisition = request.env['local.purchase.requisition'].sudo().search([], limit=1)
+        products = request.env['product.product'].sudo().search([])
 
         values = {
             'requisition':    requisition,
+            'products':products,
             'name':           name,
             'initials':       initials,
             'designation':    employee.job_id.name or '—',

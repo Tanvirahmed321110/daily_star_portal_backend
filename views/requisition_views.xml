@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+        <record id="view_local_purchase_requisition_tree" model="ir.ui.view">
+            <field name="name">local.purchase.requisition.tree</field>
+            <field name="model">local.purchase.requisition</field>
+            <field name="arch" type="xml">
+                <list string="Purchase Requisitions">
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="department_id"/>
+                    <field name="request_date"/>
+                    <field name="priority"/>
+                    <field name="state"/>
+                    <field name="supplied_deadline"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_local_purchase_requisition_form" model="ir.ui.view">
+            <field name="name">local.purchase.requisition.form</field>
+            <field name="model">local.purchase.requisition</field>
+            <field name="arch" type="xml">
+
+                <form string="Purchase Requisition">
+
+                    <header>
+
+                        <button name="action_forward"
+                                string="Forward"
+                                type="object"
+                                class="btn-primary"
+                                invisible="state != 'draft'"/>
+
+                        <button name="action_recommend"
+                                string="Recommend"
+                                type="object"
+                                invisible="state != 'forwarded'"/>
+
+                        <button name="action_approve"
+                                string="Approve"
+                                type="object"
+                                invisible="state != 'recommended'"/>
+
+                        <button name="action_supply"
+                                string="Supply"
+                                type="object"
+                                invisible="state != 'approved'"/>
+
+                        <field name="state" widget="statusbar"/>
+
+                    </header>
+
+                    <sheet>
+
+                        <group col="4">
+                            <field name="name" readonly="1"/>
+                            <field name="request_date"/>
+                            <field name="priority"/>
+                            <field name="supplied_deadline"/>
+
+                            <field name="employee_id"/>
+                            <field name="designation" readonly="1"/>
+                            <field name="department_id" readonly="1"/>
+                            <field name="hr_id" readonly="1"/>
+                        </group>
+
+                        <notebook>
+
+                            <page string="Products">
+
+                                <field name="line_ids">
+
+                                    <list editable="bottom">
+
+                                        <field name="sequence"/>
+                                        <field name="product_id"/>
+                                        <field name="description"/>
+                                        <field name="required_qty"/>
+                                        <field name="required_on"/>
+
+                                        <!-- Store only -->
+                                        <field name="last_supplied_on"
+                                               groups="purchase_requisition_tds.group_requisition_store"/>
+
+                                        <field name="last_supplied_qty"
+                                               groups="purchase_requisition_tds.group_requisition_store"/>
+
+                                        <field name="returned_on"
+                                               groups="purchase_requisition_tds.group_requisition_store"/>
+
+                                        <field name="returned_qty"
+                                               groups="purchase_requisition_tds.group_requisition_store"/>
+
+                                        <field name="available_qty"
+                                               groups="purchase_requisition_tds.group_requisition_store"/>
+
+                                        <field name="rate"
+                                               groups="purchase_requisition_tds.group_requisition_store"/>
+
+                                        <field name="value"
+                                               groups="purchase_requisition_tds.group_requisition_store"/>
+
+                                        <field name="remarks"/>
+
+                                    </list>
+
+                                </field>
+
+                            </page>
+
+                        </notebook>
+
+                    </sheet>
+
+                </form>
+
+            </field>
+        </record>
+
+
+        <!-- =========================================================
+                            SEARCH VIEW
+        ========================================================== -->
+
+        <record id="view_local_purchase_requisition_search" model="ir.ui.view">
+            <field name="name">local.purchase.requisition.search</field>
+            <field name="model">local.purchase.requisition</field>
+            <field name="arch" type="xml">
+                <search string="Search Requisition">
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="department_id"/>
+
+                    <field name="priority"/>
+                    <field name="state"/>
+
+                    <!-- FILTERS -->
+
+                    <filter string="Draft"
+                            name="draft"
+                            domain="[('state','=','draft')]"/>
+
+                    <filter string="Approved"
+                            name="approved"
+                            domain="[('state','=','approved')]"/>
+
+                    <filter string="Supplied"
+                            name="supplied"
+                            domain="[('state','=','supplied')]"/>
+
+                    <!-- GROUP BY -->
+
+                    <group expand="0"
+                           string="Group By">
+
+                        <filter string="Department"
+                                name="group_department"
+                                context="{'group_by':'department_id'}"/>
+
+                        <filter string="Employee"
+                                name="group_employee"
+                                context="{'group_by':'employee_id'}"/>
+
+                        <filter string="Status"
+                                name="group_state"
+                                context="{'group_by':'state'}"/>
+
+                        <filter string="Priority"
+                                name="group_priority"
+                                context="{'group_by':'priority'}"/>
+
+                    </group>
+
+                </search>
+
+            </field>
+        </record>
+
+
+        <!-- =========================================================
+                            KANBAN VIEW
+        ========================================================== -->
+
+        <record id="view_local_purchase_requisition_kanban" model="ir.ui.view">
+            <field name="name">local.purchase.requisition.kanban</field>
+            <field name="model">local.purchase.requisition</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="state">
+
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="department_id"/>
+                    <field name="priority"/>
+                    <field name="state"/>
+
+                    <templates>
+
+                        <t t-name="card">
+
+                            <div class="oe_kanban_card p-3">
+
+                                <div class="mb-2">
+
+                                    <strong>
+                                        <field name="name"/>
+                                    </strong>
+
+                                </div>
+
+                                <div>
+                                    Employee:
+                                    <field name="employee_id"/>
+                                </div>
+
+                                <div>
+                                    Department:
+                                    <field name="department_id"/>
+                                </div>
+
+                                <div>
+                                    Priority:
+                                    <field name="priority"/>
+                                </div>
+
+                                <div class="mt-2">
+
+                                    <span class="badge bg-primary">
+                                        <field name="state"/>
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </t>
+
+                    </templates>
+
+                </kanban>
+
+            </field>
+        </record>
+
+
+        <!-- =========================================================
+                            PIVOT VIEW
+        ========================================================== -->
+
+        <record id="view_local_purchase_requisition_pivot" model="ir.ui.view">
+            <field name="name">local.purchase.requisition.pivot</field>
+            <field name="model">local.purchase.requisition</field>
+            <field name="arch" type="xml">
+                <pivot string="Requisition Analysis">
+                    <field name="employee_id" type="row"/>
+                    <field name="department_id" type="col"/>
+
+                    <field name="id"
+                           type="measure"
+                           string="Total Requisition"/>
+
+                </pivot>
+
+            </field>
+        </record>
+
+
+        <!-- =========================================================
+                            GRAPH VIEW
+        ========================================================== -->
+
+        <record id="view_local_purchase_requisition_graph" model="ir.ui.view">
+            <field name="name">local.purchase.requisition.graph</field>
+            <field name="model">local.purchase.requisition</field>
+            <field name="arch" type="xml">
+
+                <graph string="Requisition Analysis"
+                       type="bar">
+
+                    <field name="department_id"/>
+
+                    <field name="id"
+                           type="measure"/>
+
+                </graph>
+
+            </field>
+        </record>
+
+
+        <!-- =========================================================
+                            ACTION
+        ========================================================== -->
+
+        <record id="action_local_purchase_requisition" model="ir.actions.act_window">
+            <field name="name">Purchase Requisition</field>
+            <field name="res_model">local.purchase.requisition</field>
+            <field name="view_mode">list,form,kanban,pivot,graph</field>
+            <field name="search_view_id" ref="view_local_purchase_requisition_search"/>
+            <field name="help" type="html">
+
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first requisition
+                </p>
+
+            </field>
+
+        </record>
+
+        <menuitem id="menu_local_purchase_root"
+                  name="Local Requisition"
+                  web_icon="purchase_requisition_tds,static/src/img/icon.png"
+        />
+
+        <menuitem id="menu_local_purchase_requisition"
+                  name="Requisitions"
+                  parent="menu_local_purchase_root"
+                  action="action_local_purchase_requisition"/>
+    </data>
+</odoo>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- =======================================================
+            MODULE CATEGORY
+    ======================================================== -->
+
+    <record id="module_category_local_purchase_requisition"
+            model="ir.module.category">
+
+        <field name="name">Local Purchase Requisition</field>
+        <field name="sequence">25</field>
+        <field name="description">
+            Access rights for Local Purchase Requisition System
+        </field>
+
+    </record>
+
+
+    <!-- =======================================================
+            USER GROUP
+    ======================================================== -->
+
+    <record id="group_requisition_user"
+            model="res.groups">
+
+        <field name="name">Requisition User</field>
+
+        <field name="category_id"
+               ref="purchase_requisition_tds.module_category_local_purchase_requisition"/>
+
+    </record>
+
+
+    <!-- =======================================================
+            MANAGER GROUP
+    ======================================================== -->
+
+    <record id="group_requisition_manager"
+            model="res.groups">
+
+        <field name="name">Department Manager</field>
+
+        <field name="category_id"
+               ref="purchase_requisition_tds.module_category_local_purchase_requisition"/>
+
+        <field name="implied_ids"
+               eval="[(4, ref('purchase_requisition_tds.group_requisition_user'))]"/>
+
+    </record>
+
+
+    <!-- =======================================================
+            STORE AUTHORITY
+    ======================================================== -->
+
+    <record id="group_requisition_store"
+            model="res.groups">
+
+        <field name="name">Store Authority</field>
+
+        <field name="category_id"
+               ref="purchase_requisition_tds.module_category_local_purchase_requisition"/>
+
+        <field name="implied_ids"
+               eval="[(4, ref('purchase_requisition_tds.group_requisition_user'))]"/>
+
+    </record>
+
+
+    <!-- =======================================================
+            ADMIN GROUP
+    ======================================================== -->
+
+    <record id="group_requisition_admin"
+            model="res.groups">
+
+        <field name="name">Requisition Administrator</field>
+
+        <field name="category_id"
+               ref="purchase_requisition_tds.module_category_local_purchase_requisition"/>
+
+        <field name="implied_ids"
+               eval="[
+                    (4, ref('purchase_requisition_tds.group_requisition_manager')),
+                    (4, ref('purchase_requisition_tds.group_requisition_store'))
+               ]"/>
+
+        <!-- System Settings Access -->
+        <field name="users"
+               eval="[(4, ref('base.user_admin'))]"/>
+
+    </record>
+
+    <!-- =====================================================
+           USER CAN SEE ONLY OWN REQUISITION
+   ====================================================== -->
+
+    <record id="rule_requisition_user_own"
+            model="ir.rule">
+
+        <field name="name">Own Requisition Only</field>
+
+        <field name="model_id"
+               ref="model_local_purchase_requisition"/>
+
+        <field name="groups"
+               eval="[(4, ref('purchase_requisition_tds.group_requisition_user'))]"/>
+
+        <field name="domain_force">
+            [('create_uid', '=', user.id)]
+        </field>
+
+    </record>
+
+
+    <!-- =====================================================
+            MANAGER SEE ALL
+    ====================================================== -->
+
+    <record id="rule_requisition_manager_all"
+            model="ir.rule">
+
+        <field name="name">Manager All Requisition</field>
+
+        <field name="model_id"
+               ref="model_local_purchase_requisition"/>
+
+        <field name="groups"
+               eval="[(4, ref('purchase_requisition_tds.group_requisition_manager'))]"/>
+
+        <field name="domain_force">
+            [(1,'=',1)]
+        </field>
+
+    </record>
+
+
+    <!-- =====================================================
+            STORE SEE ALL
+    ====================================================== -->
+
+    <record id="rule_requisition_store_all"
+            model="ir.rule">
+
+        <field name="name">Store All Requisition</field>
+
+        <field name="model_id"
+               ref="model_local_purchase_requisition"/>
+
+        <field name="groups"
+               eval="[(4, ref('purchase_requisition_tds.group_requisition_store'))]"/>
+
+        <field name="domain_force">
+            [(1,'=',1)]
+        </field>
+
+    </record>
+
+</odoo>

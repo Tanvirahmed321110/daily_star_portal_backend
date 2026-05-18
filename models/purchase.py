@@ -127,7 +127,7 @@ class LocalPurchaseRequisitionLine(models.Model):
         string='Product'
     )
 
-    description = fields.Char(string='Writing Option')
+    description = fields.Char(string='Name Optional')
 
     required_qty = fields.Float()
 

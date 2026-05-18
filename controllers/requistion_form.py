@@ -41,27 +41,13 @@ class RequisitionPortal(http.Controller):
 
 
     #=============  For Data Submit  =============
-    @http.route(
-        '/submit/requisition',
-        type='http',
-        auth='user',
-        website=True,
-        methods=['POST'],
-        csrf=True
-    )
+    @http.route('/submit/requisition',type='http', auth='user', website=True, methods=['POST'], csrf=True)
     def submit_requisition(self, **post):
 
         # ================= EMPLOYEE =================
         employee = request.env['hr.employee'].sudo().search([
             ('user_id', '=', request.env.user.id)
         ], limit=1)
-
-        # ================= LINE DATA =================
-        product_ids = request.httprequest.form.getlist('product_id')
-        descriptions = request.httprequest.form.getlist('description')
-        quantities = request.httprequest.form.getlist('required_qty')
-        required_dates = request.httprequest.form.getlist('required_on')
-        remarks_list = request.httprequest.form.getlist('remarks')
 
         priority = post.get('priority')
         request_date = post.get('request_date') or False
@@ -78,20 +64,33 @@ class RequisitionPortal(http.Controller):
             'hr_id': employee.barcode if employee else '',
         })
 
+
+
+        # ================= LINE DATA =================
+        product_ids = request.httprequest.form.getlist('product_id')
+        descriptions = request.httprequest.form.getlist('description')
+        quantities = request.httprequest.form.getlist('required_qty')
+        required_dates = request.httprequest.form.getlist('required_on')
+        remarks_list = request.httprequest.form.getlist('remarks')
+
+
         # ================= LINE CREATE =================
         line_vals = []
 
         for i in range(len(product_ids)):
 
-            # skip empty row (VERY IMPORTANT)
-            if not product_ids[i]:
+            product_id = product_ids[i]
+            description = descriptions[i]
+
+            # 👉 skip only if BOTH empty
+            if not product_id and not description:
                 continue
 
             line_vals.append((0, 0, {
 
-                'product_id': int(product_ids[i]),
+                'product_id': int(product_id) if product_id else False,
 
-                'description': descriptions[i] or '',
+                'description': description or '',
 
                 'required_qty': float(quantities[i] or 0),
 

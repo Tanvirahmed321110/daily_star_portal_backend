@@ -77,7 +77,7 @@
 
                                         <field name="sequence"/>
                                         <field name="product_id"/>
-                                        <field name="description"/>
+                                        <field name="description" string="Name Optional"/>
                                         <field name="required_qty"/>
                                         <field name="required_on"/>
 

@@ -229,19 +229,21 @@ addRowBtn.addEventListener('click', function () {
         </td>
 
         <td>
-            <select class="product-category"  onchange="onCategoryChange(this)">
+            <select class="product-category" name="product_id" onchange="onCategoryChange(this)">
                 ${products.innerHTML}
             </select>
         </td>
 
         <td>
             <input type="text"
+                   name="description"
                    class="product-name"
                    placeholder="Product Name"/>
         </td>
 
         <td>
             <input type="number"
+                   name="required_qty"
                    class="quantity"
                    value="1"
                    min="1"/>
@@ -249,6 +251,7 @@ addRowBtn.addEventListener('click', function () {
 
         <td>
             <input type="date"
+                   name="required_on"
                    required="required"
                    class="required-date"/>
         </td>
@@ -256,6 +259,7 @@ addRowBtn.addEventListener('click', function () {
         <td>
             <input type="text"
                    class="remarks"
+                   name="remarks"
                    placeholder="Additional notes..."/>
         </td>
     `

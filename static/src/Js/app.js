@@ -312,3 +312,17 @@ form.addEventListener('submit', function (e) {
         alert("Please fill at least Product or Product Name in one row.")
     }
 })
+
+
+// Active class add and value set
+const priorityBtns = document.querySelectorAll('.priority-btn')
+if (priorityBtns) {
+    priorityBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+            // remove all active class
+            priorityBtns.forEach(b => b.classList.remove('active'))
+            this.classList.add('active')
+            document.getElementById('priority-input').value = this.dataset.value
+        })
+    })
+}

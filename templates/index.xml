@@ -46,7 +46,7 @@
                         id="requisitionForm"
                         class="form-card">
 
-                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input type="hidden"  name="csrf_token" t-att-value="request.csrf_token()"/>
 
                         <!-- ================= TOP SECTION ================= -->
                         <div class="form-top">
@@ -66,6 +66,7 @@
                                 <label>Priority</label>
 
                                 <div class="priority-group">
+                                    <input type="hidden" name="priority" id="priority-input" value="low"/>
                                     <div class="priority-btn" data-value="high">🟢 High</div>
                                     <div class="priority-btn" data-value="medium">🟡 Medium</div>
                                     <div class="priority-btn active" data-value="low">🔴 Low</div>

@@ -1,38 +1,17 @@
-from odoo import http, SUPERUSER_ID
+from odoo import http
 from odoo.http import request
 from datetime import date
-from odoo.addons.web.controllers.home import Home
-
-class RequisitionPortal(Home):
-    # =============== Default Route Odoo  ==================
-    @http.route('/web/login', type='http', auth='public', website=True, sitemap=False)
-    def web_login(self, redirect=None, **kw):
-
-        # Odoo original login
-        response = super().web_login(redirect=redirect, **kw)
-
-        # POST request এ login হলে (actual login submit)
-        if request.httprequest.method == 'POST' and request.session.uid:
-            user = request.env['res.users'].sudo().browse(request.session.uid)
-            if user.has_group('base.group_portal'):
-                return request.redirect('/requisition')
-
-        return response
 
 
-
-
-    #=============== For Portal Main Controller  ==================
+class RequisitionPortal(http.Controller):
     @http.route('/requisition', type='http', auth='user', website=True, methods=['GET', 'POST'])
     def requisition_form(self, **kw):
-
         user = request.env.user
 
         employee = request.env['hr.employee'].sudo().search([
             ('user_id', '=', user.id)
         ], limit=1)
         name = employee.name or ''
-        print(employee)
 
         requisition = request.env['local.purchase.requisition'].sudo().search([], limit=1)
         products = request.env['product.product'].sudo().search([])
@@ -45,26 +24,21 @@ class RequisitionPortal(Home):
             'department': employee.department_id.name or '—',
             'hr_id': employee.barcode or '—',
             'work_email': employee.work_email or '—',
-            'employee_image': employee.image_128 if employee and employee.image_128 else False,
+            'employee_image': employee.image_128,
             'today': date.today().strftime('%Y-%m-%d'),
         }
 
         return request.render('purchase_requisition_tds.portal_requisition_form', values)
 
 
-
-
-
-    #=============  For Data Submit  =============
-    @http.route('/requisition/submit',type='http', auth='user', website=True, methods=['POST'], csrf=True)
+    # =============  For Data Submit  =============
+    @http.route('/requisition/submit', type='http', auth='user', website=True, methods=['POST'], csrf=True)
     def submit_requisition(self, **post):
-
         # ================= EMPLOYEE =================
         employee = request.env['hr.employee'].sudo().search([
             ('user_id', '=', request.env.user.id)
         ], limit=1)
         name = employee.name or ''
-
 
         priority = post.get('priority')
         request_date = post.get('request_date') or False
@@ -81,15 +55,12 @@ class RequisitionPortal(Home):
             'hr_id': employee.barcode if employee else '',
         })
 
-
-
         # ================= LINE DATA =================
         product_ids = request.httprequest.form.getlist('product_id')
         descriptions = request.httprequest.form.getlist('description')
         quantities = request.httprequest.form.getlist('required_qty')
         required_dates = request.httprequest.form.getlist('required_on')
         remarks_list = request.httprequest.form.getlist('remarks')
-
 
         # ================= LINE CREATE =================
         line_vals = []
@@ -120,11 +91,11 @@ class RequisitionPortal(Home):
 
         requisition = request.env['local.purchase.requisition'].sudo().search([], limit=1)
 
-        return request.render('purchase_requisition_tds.success-template',{
+        return request.render('purchase_requisition_tds.success-template', {
             'name': name,
-            'requisition':requisition,
+            'requisition': requisition,
             'work_email': employee.work_email or '—',
-            'employee_image': employee.image_128 if employee and employee.image_128 else False,
+            'employee_image': employee.image_128,
             'designation': employee.job_id.name or '—',
             'department': employee.department_id.name or '—',
             'hr_id': employee.barcode or '—',

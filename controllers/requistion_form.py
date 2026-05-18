@@ -1,10 +1,26 @@
-from odoo import http
+from odoo import http, SUPERUSER_ID
 from odoo.http import request
-from datetime import date  # ← add করো
+from datetime import date
+from odoo.addons.web.controllers.home import Home
+
+class RequisitionPortal(Home):
+    # =============== Default Route Odoo  ==================
+    @http.route('/web/login', type='http', auth='public', website=True, sitemap=False)
+    def web_login(self, redirect=None, **kw):
+
+        # Odoo original login
+        response = super().web_login(redirect=redirect, **kw)
+
+        # Login সফল হলে portal user check করো
+        if request.session.uid:
+            user = request.env['res.users'].sudo().browse(request.session.uid)
+            if user.has_group('base.group_portal'):
+                return request.redirect('/requisition')
+
+        return response
 
 
-class RequisitionPortal(http.Controller):
-
+    #=============== For Portal Main Controller  ==================
     @http.route('/requisition', type='http', auth='user', website=True, methods=['GET', 'POST'])
     def requisition_form(self, **kw):
 
@@ -14,6 +30,7 @@ class RequisitionPortal(http.Controller):
             ('user_id', '=', user.id)
         ], limit=1)
         name = employee.name or ''
+        print(employee)
 
         requisition = request.env['local.purchase.requisition'].sudo().search([], limit=1)
         products = request.env['product.product'].sudo().search([])

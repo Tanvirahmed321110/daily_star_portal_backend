@@ -96,8 +96,14 @@ class RequisitionPortal(http.Controller):
                 'line_ids': line_vals
             })
 
+        requisition = request.env['local.purchase.requisition'].sudo().search([], limit=1)
+
         return request.render('purchase_requisition_tds.success-template',{
             'name': name,
+            'requisition':requisition,
             'work_email': employee.work_email or '—',
             'employee_image': '/web/image/hr.employee/%s/image_128' % employee.id if employee else '',
+            'designation': employee.job_id.name or '—',
+            'department': employee.department_id.name or '—',
+            'hr_id': employee.barcode or '—',
         })

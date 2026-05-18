@@ -47,7 +47,7 @@
                                                     alt="user image"/>
                                             </div>
                                             <div class="profile-text">
-                                                <h4 t-esc="name">Fahim Hasan</h4>
+                                                <h4 t-esc="name"></h4>
                                                 <p style="margin-top: 4px;" t-esc="work_email"></p>
                                             </div>
                                         </div>

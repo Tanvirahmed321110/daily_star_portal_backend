@@ -7,7 +7,7 @@
             <field name="name">local.purchase.requisition.tree</field>
             <field name="model">local.purchase.requisition</field>
             <field name="arch" type="xml">
-                <list string="Purchase Requisitions">
+                <list string="Purchase Requisitions" default_order="create_date desc">
                     <field name="name"/>
                     <field name="employee_id"/>
                     <field name="department_id"/>

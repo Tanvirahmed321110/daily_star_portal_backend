@@ -7,6 +7,7 @@ class LocalPurchaseRequisition(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Local Purchase Requisition'
     _rec_name = 'name'
+    _order = 'create_date desc'
 
     name = fields.Char(
         string='Reference',

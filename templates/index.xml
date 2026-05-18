@@ -6,13 +6,11 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
             <title>Requisition Portal</title>
             <link
-                href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&amp;family=DM+Mono:wght@400;500&amp;display=swap"
-                rel="stylesheet"/>
+                    href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&amp;family=DM+Mono:wght@400;500&amp;display=swap"
+                    rel="stylesheet"/>
             <link rel="stylesheet" type="text/css"
-                      href="/purchase_requisition_tds/static/src/css/style.css"/>
+                  href="/purchase_requisition_tds/static/src/css/style.css"/>
         </head>
-
-
 
 
         <!--==================  Portal Header Here  ====================-->
@@ -20,7 +18,8 @@
             <div class="container">
                 <div class="header-wrap">
                     <!-- <div class="nav-logo">THE DAILY STAR</div> -->
-                    <div class="logo"><img src="purchase_requisition_tds/static/src/img/Daily_Star_logo.png" alt="logo"/>
+                    <div class="logo">
+                        <img src="purchase_requisition_tds/static/src/img/Daily_Star_logo.png" alt="logo"/>
                     </div>
                     <div class="nav-right">
                         <span class="nav-badge">REQUISITION</span>
@@ -35,7 +34,7 @@
                                 <div class="profile-info">
                                     <div class="profile-img">
                                         <img t-att-src="employee_image"
-                                            alt="user image"/>
+                                             alt="user image"/>
                                     </div>
                                     <div class="profile-text">
                                         <h4 t-esc="name">Fahim Hasan</h4>
@@ -44,13 +43,14 @@
                                 </div>
 
                                 <!-- Logout butotn here -->
-                                <a href="#" class="logout-btn">Logout <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                        height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <a href="#" class="logout-btn">Logout
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                         height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 
-                                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                                        <polyline points="16 17 21 12 16 7" />
-                                        <line x1="21" y1="12" x2="9" y2="12" />
+                                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                                        <polyline points="16 17 21 12 16 7"/>
+                                        <line x1="21" y1="12" x2="9" y2="12"/>
                                     </svg>
                                 </a>
                             </div>
@@ -66,7 +66,9 @@
                 <div class="page-header">
                     <div>
                         <!-- page header here -->
-                        <h1 class="page-title"> <span> Requisition Portal</span></h1>
+                        <h1 class="page-title">
+                            <span>Requisition Portal</span>
+                        </h1>
                     </div>
                 </div>
 
@@ -76,95 +78,148 @@
                         <img t-att-src="employee_image" alt="user image"/>
                     </div>
                     <div class="user-details">
-                        <div class="user-field"><label>Full Name</label>
+                        <div class="user-field">
+                            <label>Full Name</label>
                             <div class="value" t-esc="name "></div>
                         </div>
-                        <div class="user-field"><label>Designation</label>
+                        <div class="user-field">
+                            <label>Designation</label>
                             <div class="value" t-esc="designation"></div>
                         </div>
-                        <div class="user-field"><label>Department</label>
+                        <div class="user-field">
+                            <label>Department</label>
                             <div class="value" t-esc="department"></div>
                         </div>
-                        <div class="user-field"><label>HR ID</label>
+                        <div class="user-field">
+                            <label>HR ID</label>
                             <div class="value id" t-esc="hr_id"></div>
                         </div>
                     </div>
                 </div>
 
                 <!--==================||  Main Form Here  ||====================-->
-                <form action="#" method="post" id="requisitionForm" class="form-card">
+                <form action="/submit/requisition"
+                      method="post"
+                      id="requisitionForm"
+                      class="form-card">
+
                     <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
 
+                    <!-- ================= TOP SECTION ================= -->
                     <div class="form-top">
+
                         <div class="field-group">
                             <label>SL Number</label>
                             <div class="sl-badge" t-esc="requisition.name"></div>
                         </div>
+
                         <div class="field-group">
                             <label>Date</label>
-                            <input type="date" id="reqDate" t-att-value="today" readonly="readonly"/>
+                            <input type="date" name="request_date" id="reqDate"
+                                   t-att-value="today" readonly="readonly"/>
                         </div>
+
                         <div class="field-group">
                             <label>Priority</label>
+
                             <div class="priority-group">
-                                <div class="priority-btn ">🟢 High</div>
-                                <div class="priority-btn ">🟡 Medium</div>
-                                <div class="priority-btn  active">🔴 Low</div>
+                                <div class="priority-btn" data-value="high">🟢 High</div>
+                                <div class="priority-btn" data-value="medium">🟡 Medium</div>
+                                <div class="priority-btn active" data-value="low">🔴 Low</div>
                             </div>
+
+                            <input type="hidden" name="priority" id="priority-input" value="low"/>
                         </div>
+
                     </div>
 
-                    <!-- PRODUCT SECTION -->
+                    <!-- ================= PRODUCT SECTION ================= -->
                     <div class="section-title">Products Lines</div>
 
-
                     <table class="product-table">
+
                         <thead>
                             <tr>
-                                <th style="width:40px">#</th>
-                                <th style="width:220px">Product</th>
-                                <th style="width:200px">Product Name</th>
-                                <th style="width:90px">Qty</th>
-                                <th style="width:130px">Required On</th>
+                                <th>#</th>
+                                <th>Product</th>
+                                <th>Product Name</th>
+                                <th>Qty</th>
+                                <th>Required On</th>
                                 <th>Remarks</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <!-- single line here vai -->
+
+                        <tbody id="js-product-table-body">
+
+                            <!-- ================= SINGLE ROW ================= -->
                             <tr>
-                                <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:12px;">01
-                                </td>
+
+                                <td class="sl-no"  style="color:var(--muted);font-family:'DM Mono',monospace;font-size:12px;">01</td>
+
+                                <!-- PRODUCT SELECT -->
                                 <td>
-                                    <select class="product-category">
+                                    <select name="product_id"
+                                            class="product-category" onchange="onCategoryChange(this)">
                                         <option value="">Select product...</option>
                                         <t t-foreach="products" t-as="product">
-                                           <option t-att-value="product.id"  t-esc="product.name">HP LaserJet Toner</option>
+                                            <option t-att-value="product.id"
+                                                    t-esc="product.name"/>
                                         </t>
                                     </select>
                                 </td>
-                                <td><input type="text" class="product-name" placeholder="Product Name"
-                                        value="HP LaserJet Toner"/></td>
-                                <td><input type="number" class="quantity" value="2" min="1"/> </td>
-                                <td><input type="date" class="required-date" value="2026-05-05"/></td>
-                                <td><input type="text" class="remarks" placeholder="Additional notes..."/></td>
+
+                                <!-- PRODUCT NAME -->
+                                <td>
+                                    <input type="text"
+                                           name="description"
+                                           class="product-name"
+                                           placeholder="Product Name"/>
+                                </td>
+
+                                <!-- QTY -->
+                                <td>
+                                    <input type="number"
+                                           name="required_qty"
+                                           class="quantity"
+                                           value="1"
+                                           min="1"/>
+                                </td>
+
+                                <!-- DATE -->
+                                <td>
+                                    <input type="date"
+                                           name="required_on"
+                                           required="required"
+                                           class="required-date"/>
+                                </td>
+
+                                <!-- REMARKS -->
+                                <td>
+                                    <input type="text"
+                                           name="remarks"
+                                           class="remarks"
+                                           placeholder="Additional notes..."/>
+                                </td>
+
                             </tr>
+
                         </tbody>
                     </table>
 
-                    <!-- For new line add Button -->
-                    <button type="button" class="add-row-btn">+ Add Product Row</button>
+                    <!-- ================= ADD ROW BUTTON ================= -->
+                    <button type="button" class="add-row-btn">
+                        + Add Product Row
+                    </button>
 
+                    <!-- ================= SUBMIT ================= -->
                     <div class="form-actions">
-                        <!--  Submit Button  -->
-                        <button type="submit" class="btn btn-primary" id="submitBtn">
+
+                        <button type="submit" class="btn btn-primary">
                             Submit Requisition
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg" style="margin-left: 8px;">
-                                <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="white" stroke-width="1.5"
-                                    stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
                         </button>
+
                     </div>
+
                 </form>
             </div>
         </main>
@@ -176,12 +231,12 @@
                 <div class="footer-wrap" style="display: flex;justify-content: space-between;">
                     <p class="short-desc">Short Information</p>
                     <p class="copy-right">&#169; 2026 <a href="https://www.xsellencebdltd.com/">Xsellence Bangladesh
-                            Ltd</a>. All rights
-                        reserved.</p>
+                        Ltd</a>. All rights
+                        reserved.
+                    </p>
                 </div>
             </div>
         </footer>
-
 
 
         <!--============ Toast Notification Container ===============-->

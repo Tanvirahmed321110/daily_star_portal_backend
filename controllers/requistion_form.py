@@ -13,13 +13,7 @@ class RequisitionPortal(http.Controller):
         employee = request.env['hr.employee'].sudo().search([
             ('user_id', '=', user.id)
         ], limit=1)
-
         name = employee.name or ''
-        words = name.split()
-        if len(words) >= 2:
-            initials = (words[0][0] + words[1][0]).upper()
-        else:
-            initials = words[0][0].upper() if words else ''
 
         requisition = request.env['local.purchase.requisition'].sudo().search([], limit=1)
         products = request.env['product.product'].sudo().search([])
@@ -28,7 +22,6 @@ class RequisitionPortal(http.Controller):
             'requisition': requisition,
             'products': products,
             'name': name,
-            'initials': initials,
             'designation': employee.job_id.name or '—',
             'department': employee.department_id.name or '—',
             'hr_id': employee.barcode or '—',
@@ -41,13 +34,15 @@ class RequisitionPortal(http.Controller):
 
 
     #=============  For Data Submit  =============
-    @http.route('/submit/requisition',type='http', auth='user', website=True, methods=['POST'], csrf=True)
+    @http.route('/requisition/submit',type='http', auth='user', website=True, methods=['POST'], csrf=True)
     def submit_requisition(self, **post):
 
         # ================= EMPLOYEE =================
         employee = request.env['hr.employee'].sudo().search([
             ('user_id', '=', request.env.user.id)
         ], limit=1)
+        name = employee.name or ''
+
 
         priority = post.get('priority')
         request_date = post.get('request_date') or False
@@ -82,20 +77,15 @@ class RequisitionPortal(http.Controller):
             product_id = product_ids[i]
             description = descriptions[i]
 
-            # 👉 skip only if BOTH empty
+            #  skip only if BOTH empty
             if not product_id and not description:
                 continue
 
             line_vals.append((0, 0, {
-
                 'product_id': int(product_id) if product_id else False,
-
                 'description': description or '',
-
                 'required_qty': float(quantities[i] or 0),
-
                 'required_on': required_dates[i] or False,
-
                 'remarks': remarks_list[i] or '',
 
             }))
@@ -106,4 +96,8 @@ class RequisitionPortal(http.Controller):
                 'line_ids': line_vals
             })
 
-        return request.redirect('/requisition')
+        return request.render('purchase_requisition_tds.success-template',{
+            'name': name,
+            'work_email': employee.work_email or '—',
+            'employee_image': '/web/image/hr.employee/%s/image_128' % employee.id if employee else '',
+        })

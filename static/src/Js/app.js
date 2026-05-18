@@ -281,3 +281,34 @@ function onCategoryChange(selectEl) {
 
     nameInput.value = productName
 }
+
+
+
+function validateRequisitionForm() {
+
+    const rows = document.querySelectorAll('#js-product-table-body tr')
+
+    for (let row of rows) {
+
+        const product = row.querySelector('.product-category')?.value.trim()
+        const desc = row.querySelector('.product-name')?.value.trim()
+
+        // empty
+        if (!product && !desc) {
+            return false
+        }
+    }
+
+    return true
+}
+
+const form = document.querySelector('#requisitionForm')
+form.addEventListener('submit', function (e) {
+
+    const ok = validateRequisitionForm()
+
+    if (!ok) {
+        e.preventDefault()
+        alert("Please fill at least Product or Product Name in one row.")
+    }
+})

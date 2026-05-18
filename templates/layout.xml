@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="custom_layout" name="Custom Layout">
+
+        <!-- <!DOCTYPE html> -->
+        <html lang="en">
+
+            <head>
+            <meta charset="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <title>Requisition Portal</title>
+            <link
+                    href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&amp;family=DM+Mono:wght@400;500&amp;display=swap"
+                    rel="stylesheet"/>
+            <link rel="stylesheet" type="text/css"
+                  href="/purchase_requisition_tds/static/src/css/style.css"/>
+        </head>
+
+            <body>
+
+                <!-- ========================================
+                ||====== Header  Content Start Here  ======||
+                ========================================= -->
+                <header class="nav">
+                    <div class="container">
+                        <div class="header-wrap">
+                            <!-- <div class="nav-logo">THE DAILY STAR</div> -->
+                            <div class="logo">
+                                <img src="../purchase_requisition_tds/static/src/img/Daily_Star_logo.png" alt="logo"/>
+                            </div>
+                            <div class="nav-right">
+                                <span class="nav-badge">REQUISITION</span>
+
+
+                                <!-- Profile Dropdown Here -->
+                                <div class="profile-dropdown">
+                                    <t t-set="words" t-value="name.split()"/>
+                                    <t t-set="initials" t-value="(words[0][0] + words[1][0]).upper() if len(words) >= 2 else (words[0][0].upper() if words else '')"/>
+
+                                    <div class="avater-name" t-esc="initials"/>
+
+                                    <!-- Dropdown -->
+                                    <div class="profile-menu">
+                                        <div class="profile-info">
+                                            <div class="profile-img">
+                                                <img t-att-src="employee_image"
+                                                    alt="user image"/>
+                                            </div>
+                                            <div class="profile-text">
+                                                <h4 t-esc="name">Fahim Hasan</h4>
+                                                <p style="margin-top: 4px;" t-esc="work_email"></p>
+                                            </div>
+                                        </div>
+
+                                        <!-- Logout butotn here -->
+                                        <a href="#" class="logout-btn">Logout
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+                                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                                                <polyline points="16 17 21 12 16 7"/>
+                                                <line x1="21" y1="12" x2="9" y2="12"/>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+
+                <main class=" " id="">
+                    <t t-raw="0"/>
+                </main>
+
+
+
+                <!-- ========================================
+                ||====== Footer  Content Start Here  ======||
+                ========================================= -->
+                 <footer>
+                    <div class="container">
+                        <div class="footer-wrap" style="display: flex;justify-content: space-between;">
+                            <p class="short-desc">Short Information</p>
+                            <p class="copy-right">&#169; 2026 <a href="https://www.xsellencebdltd.com/">Xsellence Bangladesh
+                                Ltd</a>. All rights
+                                reserved.
+                            </p>
+                        </div>
+                    </div>
+                </footer>
+
+                <!--    Javascript Links Here     -->
+                <script src="/purchase_requisition_tds/static/src/js/app.js"></script>
+            </body>
+        </html>
+    </template>
+</odoo>

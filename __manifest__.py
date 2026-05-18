@@ -18,7 +18,9 @@
         'views/requisition_views.xml',
 
        # Portal Templates Here
+        'templates/layout.xml',
         'templates/index.xml',
+        'templates/alert.xml',
 
     ],
     'application': True,

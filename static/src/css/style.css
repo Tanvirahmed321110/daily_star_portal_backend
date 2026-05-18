@@ -186,11 +186,11 @@ header .avater-name {
     position: absolute;
     top: 120%;
     right: 0;
-    width: 220px;
+    width: fit-content;
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-    padding: 15px;
+    padding: 16px;
     opacity: 0;
     visibility: hidden;
     transform: translateY(10px);

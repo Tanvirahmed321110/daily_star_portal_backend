@@ -18,7 +18,7 @@
                     <!--==================||  User Information Here  ||====================-->
                     <div class="user-card">
                         <div class="user-avatar">
-                            <img t-att-src="employee_image" alt="user image"/>
+                            <img t-att-src="image_data_uri(employee_image)" alt="user image"/>
                         </div>
                         <div class="user-details">
                             <div class="user-field">

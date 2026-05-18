@@ -11,13 +11,15 @@ class RequisitionPortal(Home):
         # Odoo original login
         response = super().web_login(redirect=redirect, **kw)
 
-        # Login সফল হলে portal user check করো
-        if request.session.uid:
+        # POST request এ login হলে (actual login submit)
+        if request.httprequest.method == 'POST' and request.session.uid:
             user = request.env['res.users'].sudo().browse(request.session.uid)
             if user.has_group('base.group_portal'):
                 return request.redirect('/requisition')
 
         return response
+
+
 
 
     #=============== For Portal Main Controller  ==================
@@ -43,11 +45,14 @@ class RequisitionPortal(Home):
             'department': employee.department_id.name or '—',
             'hr_id': employee.barcode or '—',
             'work_email': employee.work_email or '—',
-            'employee_image': '/web/image/hr.employee/%s/image_128' % employee.id if employee else '',
+            'employee_image': employee.image_128 if employee and employee.image_128 else False,
             'today': date.today().strftime('%Y-%m-%d'),
         }
 
         return request.render('purchase_requisition_tds.portal_requisition_form', values)
+
+
+
 
 
     #=============  For Data Submit  =============
@@ -119,7 +124,7 @@ class RequisitionPortal(Home):
             'name': name,
             'requisition':requisition,
             'work_email': employee.work_email or '—',
-            'employee_image': '/web/image/hr.employee/%s/image_128' % employee.id if employee else '',
+            'employee_image': employee.image_128 if employee and employee.image_128 else False,
             'designation': employee.job_id.name or '—',
             'department': employee.department_id.name or '—',
             'hr_id': employee.barcode or '—',

@@ -713,17 +713,15 @@ a {
     transition: color 0.3s ease;
 }
 
-
-/*================|| For Alert Page  ||==================*/
-
-/* ══════════════════════════════════
-   DESIGN 1 — Navy Elevated
-══════════════════════════════════ */
-.design {
+main{
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    min-height: calc(100dvh - 150px);
 }
+/*================|| For Alert Page  ||==================*/
+
 
 .d1-card {
     position: relative;
@@ -733,12 +731,13 @@ a {
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-top: 8px solid var(--accent);
     border-radius: 20px;
-    padding: 48px 44px;
-    max-width: 480px;
+    padding: 28px 24px;
+    max-width: 440px;
     width: 100%;
     text-align: center;
     animation: fadeUp 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both 3;
-    margin: 24px 0;
+    align-items: center;
+    margin: 32px 0;
 }
 
 @keyframes fadeUp {
@@ -791,22 +790,21 @@ a {
     font-family: 'Syne', sans-serif;
     font-size: 26px;
     font-weight: 800;
-    margin-bottom: 10px;
 }
 
 .d1-sub {
     font-size: 13.5px;
-    color: rgba(255, 255, 255, 0.5);
-    line-height: 1.75;
-    margin-bottom: 28px;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-top: 8px;
 }
 
 .d1-meta {
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 12px;
-    padding: 18px 22px;
-    margin-bottom: 28px;
+    padding: 20px 12px;
+    margin: 4px 0;
     text-align: left;
 }
 

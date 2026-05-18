@@ -751,8 +751,8 @@ main{
 }
 
 .d1-ring {
-    width: 88px;
-    height: 88px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     margin: 0 auto 28px;
     display: flex;
@@ -773,9 +773,8 @@ main{
 }
 
 .d1-ring.success {
-    background: rgba(16, 185, 129, 0.15);
-    border: 6px solid var(--success);
-    box-shadow: 0 0 32px rgba(16, 185, 129, 0.25);
+    background: rgba(16, 185, 129, 0.216);
+    border: 4px solid var(--success);
 }
 
 .d1-ring.error {
@@ -1036,7 +1035,6 @@ main{
     .d1-ring.success {
         background: rgba(16, 185, 129, 0.322);
         border: 4px solid var(--success);
-        box-shadow: 0 0 32px rgba(16, 185, 129, 0.25);
     }
     .d1-btn {
         font-size: 13px;

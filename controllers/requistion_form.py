@@ -5,7 +5,7 @@ from .base import BasePortalController
 
 
 class RequisitionPortal(http.Controller, BasePortalController):
-    @http.route('/requisition', type='http', auth='user', website=True, methods=['GET', 'POST'])
+    @http.route('/dashboard/requisition', type='http', auth='user', website=True, methods=['GET', 'POST'])
     def requisition_form(self, **kw):
 
         # import from base
@@ -46,7 +46,7 @@ class RequisitionPortal(http.Controller, BasePortalController):
         employee = request.env['hr.employee'].sudo().search([
             ('user_id', '=', request.env.user.id)
         ], limit=1)
-        name = employee.name or ''
+        # name = employee.name or ''
 
         priority = post.get('priority')
         request_date = post.get('request_date') or False
@@ -94,7 +94,8 @@ class RequisitionPortal(http.Controller, BasePortalController):
 
         requisition = request.env['local.purchase.requisition'].sudo().search([], limit=1)
 
-        return request.render('purchase_requisition_tds.success-template', {
-            'name': name,
+        values.update({
             'requisition': requisition,
         })
+
+        return request.render('purchase_requisition_tds.success-template', values)

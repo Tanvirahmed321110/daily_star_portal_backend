@@ -19,7 +19,7 @@ class CustomerPortalInherit(CustomerPortal):
             return redirect('/web')
 
         elif user.has_group('base.group_portal'):  # Portal User
-            return redirect('/requisition')
+            return redirect('/dashboard')
 
         else:
-            return redirect('/requisition')
+            return redirect('/dashboard')

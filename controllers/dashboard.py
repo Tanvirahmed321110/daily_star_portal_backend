@@ -4,7 +4,7 @@ from datetime import date
 from .base import BasePortalController
 
 
-class DashboardController(BasePortalController):
+class DashboardController(BasePortalController,http.Controller):
     @http.route('/dashboard', type='http', auth='user', website=True, methods=['GET', 'POST'])
     def requisition_form(self, **kw):
         # import from base

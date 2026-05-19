@@ -6,15 +6,15 @@
         <html lang="en">
 
             <head>
-            <meta charset="UTF-8"/>
-            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-            <title>Requisition Portal</title>
-            <link
-                    href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&amp;family=DM+Mono:wght@400;500&amp;display=swap"
-                    rel="stylesheet"/>
-            <link rel="stylesheet" type="text/css"
-                  href="/purchase_requisition_tds/static/src/css/style.css"/>
-        </head>
+                <meta charset="UTF-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                <title>Requisition Portal</title>
+                <link
+                        href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&amp;family=DM+Mono:wght@400;500&amp;display=swap"
+                        rel="stylesheet"/>
+                <link rel="stylesheet" type="text/css"
+                      href="/purchase_requisition_tds/static/src/css/style.css?v=1"/>
+            </head>
 
             <body>
 
@@ -35,7 +35,8 @@
                                 <!-- Profile Dropdown Here -->
                                 <div class="profile-dropdown">
                                     <t t-set="words" t-value="name.split()"/>
-                                    <t t-set="initials" t-value="(words[0][0] + words[1][0]).upper() if len(words) >= 2 else (words[0][0].upper() if words else '')"/>
+                                    <t t-set="initials"
+                                       t-value="(words[0][0] + words[1][0]).upper() if len(words) >= 2 else (words[0][0].upper() if words else '')"/>
 
                                     <div class="avater-name" t-esc="initials"/>
 
@@ -43,8 +44,8 @@
                                     <div class="profile-menu">
                                         <div class="profile-info">
                                             <div class="profile-img">
-                                                <img t-att-src = "image_data_uri(employee_image)"
-                                                    alt="user image"/>
+                                                <img t-att-src="image_data_uri(employee_image)"
+                                                     alt="user image"/>
                                             </div>
                                             <div class="profile-text">
                                                 <h4 t-esc="name"></h4>
@@ -55,8 +56,8 @@
                                         <!-- Logout butotn here -->
                                         <a href="/web/session/logout" class="logout-btn">Logout
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                 height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 
                                                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
                                                 <polyline points="16 17 21 12 16 7"/>
@@ -71,20 +72,18 @@
                 </header>
 
 
-                <main class=" " id="">
-                    <t t-raw="0"/>
-                </main>
-
+                <t t-raw="0"/>
 
 
                 <!-- ========================================
                 ||====== Footer  Content Start Here  ======||
                 ========================================= -->
-                 <footer>
+                <footer>
                     <div class="container">
                         <div class="footer-wrap" style="display: flex;justify-content: space-between;">
                             <p class="short-desc">Short Information</p>
-                            <p class="copy-right">&#169; 2026 <a href="https://www.xsellencebdltd.com/">Xsellence Bangladesh
+                            <p class="copy-right">&#169; 2026 <a href="https://www.xsellencebdltd.com/">Xsellence
+                                Bangladesh
                                 Ltd</a>. All rights
                                 reserved.
                             </p>
@@ -96,5 +95,35 @@
                 <script src="/purchase_requisition_tds/static/src/js/app.js"></script>
             </body>
         </html>
+    </template>
+
+
+    <!-- Breadcrumb -->
+    <template id="breadcrumb_component">
+        <t t-if="breadcrumb and len(breadcrumb) > 0">
+            <nav class="breadcrumb">
+                <t t-foreach="breadcrumb" t-as="item">
+                    <t t-if="not item_last">
+                        <a t-if="item.get('url')" t-att-href="item['url']" class="breadcrumb-link">
+                            <t t-esc="item['name']"/>
+                        </a>
+                        <span t-else="" class="breadcrumb-current">
+                            <t t-esc="item['name']"/>
+                        </span>
+                        <span t-if="not item_last" class="separator">
+                            <svg viewBox="0 0 24 24" fill="none" width="16" height="16">
+                                <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                      stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                    </t>
+                    <t t-if="item_last">
+                        <span class="active">
+                            <t t-esc="item['name']"/>
+                        </span>
+                    </t>
+                </t>
+            </nav>
+        </t>
     </template>
 </odoo>

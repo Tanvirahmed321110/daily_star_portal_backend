@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_requisition_details" name="Requisition Details Page">
+        <t t-call="purchase_requisition_tds.custom_layout">
+            <!--  css link   -->
+            <link rel="stylesheet" type="text/css"
+                  href="/purchase_requisition_tds/static/src/css/pages.css"/>
+
+            <!--====================||  MAIN CONTENT  ||=================-->
+            <main class="main">
+                <div class="container details">
+
+                    <!-- Breadcrumb -->
+                    <t t-call="purchase_requisition_tds.breadcrumb_component"></t>
+
+                    <!-- Page Header -->
+                    <div class="page-header">
+                        <!-- page header here -->
+                        <h1 class="page-title">
+                            <span>Requisition Details</span>
+                        </h1>
+                        <div>
+                            <div class="req-number">REQ-2026-00847</div>
+                        </div>
+                    </div>
+
+                    <!-- Meta Card -->
+                    <div class="meta-card">
+                        <!-- User mini -->
+                        <div class="user-mini">
+                            <div class="user-mini-img">
+                                <img src="https://lh3.googleusercontent.com/a/ACg8ocLiFW0fYS0vL3mAnqt2sQMgamQjc5RYvbjADXkbHQHgW0VXriJi=s192-c-mo"
+                                     alt="user"/>
+                            </div>
+                            <div class="user-mini-info">
+                                <div class="user-mini-name">Fahim Hossain</div>
+                                <div class="user-mini-sub">Jr. Developer</div>
+                                <div class="user-mini-sub team">Technical Team</div>
+                            </div>
+                        </div>
+                        <div class="meta-divider"></div>
+                        <!-- Meta grid -->
+                        <div class="meta-grid">
+                            <!-- For Sl Number -->
+                            <div class="meta-item">
+                                <div class="meta-label">SL Number</div>
+                                <div class="meta-value mono" id="metaSL">REQ-2026-00847</div>
+                            </div>
+                            <!-- For Date -->
+                            <div class="meta-item">
+                                <div class="meta-label">Submitted Date</div>
+                                <div class="meta-value" id="metaDate">2026-05-19</div>
+                            </div>
+
+                            <!-- For Priority -->
+                            <div class="meta-item">
+                                <div class="meta-label">Priority</div>
+                                <div>
+                                    <div class="badge">High</div>
+                                </div>
+                            </div>
+
+                            <!-- For Status -->
+                            <div class="meta-item">
+                                <div class="meta-label">Status</div>
+                                <div>
+                                    <div class="badge status">Pending</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="meta-divider"></div>
+
+                        <div class="meta-item">
+                            <div class="meta-label">Total Items</div>
+                            <div class="meta-value" id="metaItems">3 items</div>
+                        </div>
+                    </div>
+
+                    <!-- Products Section -->
+                    <div class="section-header">
+                        <div class="title">Product Lines</div>
+                    </div>
+
+                    <!--=================|| Product Lines ||==================-->
+                    <div class="products-card">
+                        <table class="prod-table">
+                            <thead>
+                                <tr>
+                                    <th style="width:50px">#</th>
+                                    <th>Product</th>
+                                    <th style="width:80px">Qty</th>
+                                    <th style="width:130px">Required On</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsBody">
+                                <tr>
+                                    <td>
+                                        <span class="prod-num">01</span>
+                                    </td>
+                                    <td>
+                                        <div class="prod-name">HP LaserJet Toner</div>
+                                        <div class="prod-category">Office Supplies</div>
+                                    </td>
+                                    <td>
+                                        <span class="qty-chip">2</span>
+                                    </td>
+                                    <td>
+                                        <span class="date-val">2026-05-25</span>
+                                    </td>
+                                    <td>
+                                        <span class="remarks-val">Black toner only</span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <span class="prod-num">02</span>
+                                    </td>
+                                    <td>
+                                        <div class="prod-name">Wireless Keyboard</div>
+                                        <div class="prod-category">IT Hardware</div>
+                                    </td>
+                                    <td>
+                                        <span class="qty-chip">5</span>
+                                    </td>
+                                    <td>
+                                        <span class="date-val">2026-05-25</span>
+                                    </td>
+                                    <td>
+                                        <span class="remarks-val empty">No remarks</span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <span class="prod-num">03</span>
+                                    </td>
+                                    <td>
+                                        <div class="prod-name">USB-C Hub</div>
+                                        <div class="prod-category">IT Hardware</div>
+                                    </td>
+                                    <td>
+                                        <span class="qty-chip">3</span>
+                                    </td>
+                                    <td>
+                                        <span class="date-val">2026-05-28</span>
+                                    </td>
+                                    <td>
+                                        <span class="remarks-val">7-port preferred</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+            </main>
+        </t>
+    </template>
+</odoo>

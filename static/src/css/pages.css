@@ -266,30 +266,6 @@
     gap: 12px;
 }
 
-.breadcrumb {
-    padding-bottom: 12px;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
-    font-size: 13px;
-    font-weight: 500;
-}
-
-.breadcrumb .active {
-    color: var(--text-primary);
-    font-weight: 600;
-}
-
-.breadcrumb .separator {
-    display: flex;
-    align-items: center;
-}
-
-.breadcrumb svg {
-    width: 16px;
-}
-
 /*================||   History Table Here   ||===============*/
 .table-card {
     background: var(--card);

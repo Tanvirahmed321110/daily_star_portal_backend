@@ -67,6 +67,32 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 
+.breadcrumb {
+    padding-bottom: 12px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.breadcrumb .active {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.breadcrumb .separator {
+    display: flex;
+    align-items: center;
+}
+
+.breadcrumb svg {
+    width: 16px;
+}
+
+
+
 header {
     border-bottom: 8px solid white;
     box-shadow: 0 2px 12px rgba(30, 79, 194, .06);

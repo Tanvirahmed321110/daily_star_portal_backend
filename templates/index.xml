@@ -3,9 +3,14 @@
     <template id="portal_requisition_form" name="Requisition Portal">
         <t t-call="purchase_requisition_tds.custom_layout">
 
+
+
             <!--====================||  MAIN CONTENT  ||=================-->
             <main class="main">
                 <div class="container">
+                    <!-- Breadcrumb -->
+                    <t t-call="purchase_requisition_tds.breadcrumb_component"></t>
+
                     <div class="page-header">
                         <div>
                             <!-- page header here -->

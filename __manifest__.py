@@ -22,6 +22,7 @@
         'templates/layout.xml',
         'templates/dashboard.xml',
         'templates/index.xml',
+        'templates/requisition_details.xml',
         'templates/alert.xml',
 
     ],

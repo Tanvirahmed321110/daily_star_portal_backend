@@ -16,6 +16,11 @@ class RequisitionPortal(http.Controller):
         requisition = request.env['local.purchase.requisition'].sudo().search([], limit=1)
         products = request.env['product.product'].sudo().search([])
 
+        breadcrumb = [
+            {'name': 'Dashboard', 'url': '/dashboard'},
+            {'name': 'Create New Requisition', 'url': False},
+        ]
+
         values = {
             'sl_number' : requisition.name,
             'products': products,
@@ -26,6 +31,7 @@ class RequisitionPortal(http.Controller):
             'work_email': employee.work_email or '—',
             'employee_image': employee.image_128,
             'today': date.today().strftime('%Y-%m-%d'),
+            'breadcrumb' :breadcrumb,
         }
 
         return request.render('purchase_requisition_tds.portal_requisition_form', values)

@@ -3,7 +3,7 @@ from odoo.http import request
 from datetime import date
 
 
-class RequisitionPortal(http.Controller):
+class RequisitionDetailsController(http.Controller):
     @http.route('/dashboard/requisition_details', type='http', auth='user', website=True, methods=['GET', 'POST'])
     def requisition_form(self, **kw):
 

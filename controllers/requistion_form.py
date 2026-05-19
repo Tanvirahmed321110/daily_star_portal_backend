@@ -1,11 +1,15 @@
 from odoo import http
 from odoo.http import request
 from datetime import date
+from .base import BasePortalController
 
 
-class RequisitionPortal(http.Controller):
+class RequisitionPortal(http.Controller, BasePortalController):
     @http.route('/requisition', type='http', auth='user', website=True, methods=['GET', 'POST'])
     def requisition_form(self, **kw):
+
+        # import from base
+        values = self._get_user_data()
 
         user = request.env.user
         employee = request.env['hr.employee'].sudo().search([
@@ -21,18 +25,13 @@ class RequisitionPortal(http.Controller):
             {'name': 'Create New Requisition', 'url': False},
         ]
 
-        values = {
+        values.update({
             'sl_number' : requisition.name,
             'products': products,
             'name': name,
-            'designation': employee.job_id.name or '—',
-            'department': employee.department_id.name or '—',
-            'hr_id': employee.barcode or '—',
-            'work_email': employee.work_email or '—',
-            'employee_image': employee.image_128,
             'today': date.today().strftime('%Y-%m-%d'),
             'breadcrumb' :breadcrumb,
-        }
+        })
 
         return request.render('purchase_requisition_tds.portal_requisition_form', values)
 
@@ -40,6 +39,9 @@ class RequisitionPortal(http.Controller):
     # =============  For Data Submit  =============
     @http.route('/requisition/submit', type='http', auth='user', website=True, methods=['POST'], csrf=True)
     def submit_requisition(self, **post):
+        # import from base
+        values = self._get_user_data()
+
         # ================= EMPLOYEE =================
         employee = request.env['hr.employee'].sudo().search([
             ('user_id', '=', request.env.user.id)
@@ -54,11 +56,6 @@ class RequisitionPortal(http.Controller):
             'priority': priority,
             'requisitioned_by': request.env.user.id,
             'request_date': request_date,
-
-            # EMPLOYEE DATA
-            'department_id': employee.department_id.id if employee else False,
-            'designation': employee.job_title if employee else '',
-            'hr_id': employee.barcode if employee else '',
         })
 
         # ================= LINE DATA =================
@@ -100,9 +97,4 @@ class RequisitionPortal(http.Controller):
         return request.render('purchase_requisition_tds.success-template', {
             'name': name,
             'requisition': requisition,
-            'work_email': employee.work_email or '—',
-            'employee_image': employee.image_128,
-            'designation': employee.job_id.name or '—',
-            'department': employee.department_id.name or '—',
-            'hr_id': employee.barcode or '—',
         })

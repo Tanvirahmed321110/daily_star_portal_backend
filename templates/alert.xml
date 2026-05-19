@@ -2,7 +2,8 @@
     <!--===============  For Success Template  ===============-->
     <template id="success-template">
         <t t-call="purchase_requisition_tds.custom_layout">
-            <div class="design active" id="d1" style="position:relative;">
+            <main class="main">
+                <div class="design active" id="d1" style="position:relative;">
 
                 <div id="d1-success" class="d1-card">
                     <div class="d1-ring success">
@@ -54,6 +55,7 @@
                     <a href="/requisition" class="d1-btn error">← Go Back &amp; Fix</a>
                 </div>
             </div>
+            </main>
         </t>
     </template>
 

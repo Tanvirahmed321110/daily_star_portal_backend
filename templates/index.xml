@@ -53,7 +53,7 @@
 
                             <div class="field-group">
                                 <label>SL Number</label>
-                                <div class="sl-badge" t-esc="requisition.name"></div>
+                                <div class="sl-badge" t-esc="sl_number"></div>
                             </div>
 
                             <div class="field-group">

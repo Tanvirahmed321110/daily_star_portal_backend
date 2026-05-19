@@ -16,6 +16,7 @@
         'security/ir.model.access.csv',
         'data/sequence.xml',
         'views/requisition_views.xml',
+        'views/hr_employee_view.xml',
 
        # Portal Templates Here
         'templates/layout.xml',

@@ -16,8 +16,6 @@
 
 
 
-
-
 @keyframes rotateIcon {
     0% {
         transform: rotate(0deg) scale(1);
@@ -137,7 +135,6 @@
         transform: translateY(0)
     }
 }
-
 
 .s-card::before {
     content: "";

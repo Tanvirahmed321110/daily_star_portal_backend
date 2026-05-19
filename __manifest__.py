@@ -16,10 +16,11 @@
         'security/ir.model.access.csv',
         'data/sequence.xml',
         'views/requisition_views.xml',
-        'views/hr_employee_view.xml',
+        'views/hr_employee_inherit_view.xml',
 
        # Portal Templates Here
         'templates/layout.xml',
+        'templates/dashboard.xml',
         'templates/index.xml',
         'templates/alert.xml',
 

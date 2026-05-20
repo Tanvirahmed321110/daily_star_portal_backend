@@ -1,15 +1,15 @@
 from odoo import http
 from odoo.http import request
 from datetime import date
-from .base import BasePortalController
+from .base import _get_user_data
 
 
-class RequisitionPortal(http.Controller, BasePortalController):
+class RequisitionPortal(http.Controller):
     @http.route('/dashboard/requisition', type='http', auth='user', website=True, methods=['GET', 'POST'])
     def requisition_form(self, **kw):
 
         # import from base
-        values = self._get_user_data()
+        values = _get_user_data()
 
         user = request.env.user
         employee = request.env['hr.employee'].sudo().search([
@@ -26,7 +26,7 @@ class RequisitionPortal(http.Controller, BasePortalController):
         ]
 
         values.update({
-            'sl_number' : requisition.name,
+            'sl_number' : requisition.name or 'Emptyt',
             'products': products,
             'name': name,
             'today': date.today().strftime('%Y-%m-%d'),
@@ -40,7 +40,7 @@ class RequisitionPortal(http.Controller, BasePortalController):
     @http.route('/requisition/submit', type='http', auth='user', website=True, methods=['POST'], csrf=True)
     def submit_requisition(self, **post):
         # import from base
-        values = self._get_user_data()
+        values = _get_user_data()
 
         # ================= EMPLOYEE =================
         employee = request.env['hr.employee'].sudo().search([

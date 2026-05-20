@@ -195,6 +195,33 @@
                                             </td>
                                         </tr>
                                     </t>
+
+                                    <tr id="emptyFilter" style="display:none;">
+                                        <td colspan="7" style="padding:0;border:none;">
+                                            <div class="empty-1">
+                                                <div class="e1-icon-wrap">
+                                                    <div class="e1-rings"></div>
+                                                    <div class="e1-doc">
+                                                        <div class="e1-lines">
+                                                            <div class="e1-line"></div>
+                                                            <div class="e1-line"></div>
+                                                            <div class="e1-line"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <h3>No Results Found</h3>
+                                                <p>No requisitions found for the selected filter.</p>
+                                                <a href="/dashboard/requisition" class="btn-1">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                                        stroke="currentColor" stroke-width="2.5">
+                                                        <line x1="12" y1="5" x2="12" y2="19"/>
+                                                        <line x1="5" y1="12" x2="19" y2="12"/>
+                                                    </svg>
+                                                    New Requisition
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 </t>
 
                                 <!-- When Item Not Found / Available -->

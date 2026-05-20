@@ -367,15 +367,13 @@ tbody .table-row:hover {
     align-items: center;
     justify-content: center;
     width: 18px;
-    height: 18px;
-    /* border:2px solid var(--navy); */
-    /* background-color: var(--light); */
+    height: 16px;
     border-radius: 50%;
     font-size: 11px;
-    line-height: 1;
+    line-height: 1.2;
     font-weight: 600;
     background-color: var(--accent);
-    color: white
+    color: white;
 }
 
 .table-card .badge {

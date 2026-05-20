@@ -26,7 +26,7 @@
                         <div class="header-wrap">
                             <!-- <div class="nav-logo">THE DAILY STAR</div> -->
                             <div class="logo">
-                                <img src="../purchase_requisition_tds/static/src/img/Daily_Star_logo.png" alt="logo"/>
+                                <img src="../../purchase_requisition_tds/static/src/img/Daily_Star_logo.png" alt="logo"/>
                             </div>
                             <div class="nav-right">
                                 <span class="nav-badge">REQUISITION</span>

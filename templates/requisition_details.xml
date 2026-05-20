@@ -20,60 +20,76 @@
                             <span>Requisition Details</span>
                         </h1>
                         <div>
-                            <div class="req-number">REQ-2026-00847</div>
+                            <div class="req-number" t-esc="requisition.name">REQ-2026-00847</div>
                         </div>
                     </div>
 
                     <!-- Meta Card -->
                     <div class="meta-card">
-                        <!-- User mini -->
+                        <!-- User Information Here -->
                         <div class="user-mini">
                             <div class="user-mini-img">
-                                <img src="https://lh3.googleusercontent.com/a/ACg8ocLiFW0fYS0vL3mAnqt2sQMgamQjc5RYvbjADXkbHQHgW0VXriJi=s192-c-mo"
-                                     alt="user"/>
+                                <img t-att-src="image_data_uri(employee_image)"
+                                                     alt="user image"/>
                             </div>
                             <div class="user-mini-info">
-                                <div class="user-mini-name">Fahim Hossain</div>
-                                <div class="user-mini-sub">Jr. Developer</div>
-                                <div class="user-mini-sub team">Technical Team</div>
+                                <div class="user-mini-name" t-esc="name">Fahim Hossain</div>
+                                <div class="user-mini-sub" t-esc="designation">Jr. Developer</div>
+                                <div class="user-mini-sub team" t-esc="department">Technical Team</div>
                             </div>
                         </div>
                         <div class="meta-divider"></div>
+
                         <!-- Meta grid -->
                         <div class="meta-grid">
                             <!-- For Sl Number -->
                             <div class="meta-item">
                                 <div class="meta-label">SL Number</div>
-                                <div class="meta-value mono" id="metaSL">REQ-2026-00847</div>
+                                <div class="meta-value mono" id="metaSL" t-esc="requisition.name">REQ-2026-00847</div>
                             </div>
+
                             <!-- For Date -->
                             <div class="meta-item">
                                 <div class="meta-label">Submitted Date</div>
-                                <div class="meta-value" id="metaDate">2026-05-19</div>
+                                <div class="meta-value" id="metaDate" t-esc="requisition.request_date">2026-05-19</div>
                             </div>
 
                             <!-- For Priority -->
                             <div class="meta-item">
                                 <div class="meta-label">Priority</div>
                                 <div>
-                                    <div class="badge">High</div>
+                                    <div class="badge" t-esc="requisition.priority">High</div>
                                 </div>
                             </div>
 
-                            <!-- For Status -->
+                            <!-- For State -->
                             <div class="meta-item">
                                 <div class="meta-label">Status</div>
                                 <div>
-                                    <div class="badge status">Pending</div>
+                                    <div class="badge status" t-esc="requisition.state"></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="meta-divider"></div>
 
-                        <div class="meta-item">
-                            <div class="meta-label">Total Items</div>
-                            <div class="meta-value" id="metaItems">3 items</div>
+                        <div class="meta-divider"></div>
+                        <div class="meta-grid">
+                            <!--  Total Items  -->
+                            <div class="meta-item">
+                                <div class="meta-label">Total Items</div>
+                                <div class="meta-value">03</div>
+                            </div>
+
+                            <!--  Hr ID -->
+                            <div class="meta-item">
+                                <div class="meta-label">HR ID</div>
+                                <div class="meta-value" t-esc="hr_id"></div>
+                            </div>
+
+                             <!--  Empty Div For layout  -->
+                            <div></div>
+                            <div></div>
                         </div>
+
                     </div>
 
                     <!-- Products Section -->

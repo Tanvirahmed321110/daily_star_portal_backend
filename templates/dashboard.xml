@@ -161,7 +161,7 @@
                                                 </span>
                                             </td>
                                             <td style="text-align:center;">
-                                                <a href="requisition_details.html" class="view-btn">
+                                                <a t-attf-href="/dashboard/requisition_details/{{req.id}}" class="view-btn">
                                                     View
                                                     <!-- Eye / View Icon -->
                                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none"

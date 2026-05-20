@@ -15,15 +15,36 @@ class DashboardController(BasePortalController,http.Controller):
             ('user_id', '=', user.id)
         ], limit=1)
         name = employee.name or ''
+        base_domain = [ ('create_uid', '=', user.id)]
 
-        requisition = request.env['local.purchase.requisition'].sudo().search([], limit=1)
-        products = request.env['product.product'].sudo().search([])
+        # all requisitions
+        requisitions = request.env['local.purchase.requisition'].sudo().search(base_domain)
+        # Forwarded
+        forwarded_count = request.env['local.purchase.requisition'].sudo().search_count([
+            *base_domain,
+            '|',
+            '|',
+            ('state', '=', 'draft'),
+            ('state', '=', 'forwarded'),
+            ('state', '=', 'recommended')
+        ])
+        approved_count = request.env['local.purchase.requisition'].sudo().search_count([
+            *base_domain,
+            '|',
+            ('state', '=', 'supplied'),
+            ('state', '=', 'approved')
+        ])
+        cancelled_count = request.env['local.purchase.requisition'].sudo().search_count(base_domain + [('state', '=', 'cancelled')])
+        # products = request.env['product.product'].sudo().search([])
 
         values.update({
-            'sl_number' : requisition.name,
-            'products': products,
+            # 'products': products,
             'name': name,
             'today': date.today().strftime('%Y-%m-%d'),
+            'requisitions':requisitions,
+            'forwarded_count':forwarded_count,
+            'approved_count': approved_count,
+            'cancelled_count':cancelled_count,
         })
 
         return request.render('purchase_requisition_tds.portal_requisition_dashboard', values)

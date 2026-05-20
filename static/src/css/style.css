@@ -909,6 +909,11 @@ main{
     color: var(--error);
 }
 
+.dashboard-btn:hover svg {
+    animation: none !important;
+    transform: none !important;
+    transition: none !important;
+}
 
 
 

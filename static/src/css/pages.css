@@ -423,8 +423,8 @@ tbody .table-row:hover {
     background: var(--light);
     border: 1px solid var(--border);
     color: var(--blue);
-    padding: 8px 12px;
-    border-radius: 7px;
+    padding: 8px 10px;
+    border-radius: 6px;
     font-size: 12px;
     font-weight: 600;
     text-decoration: none;

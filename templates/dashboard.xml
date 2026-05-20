@@ -149,7 +149,7 @@
                                                 <span class="req-date" t-esc="req.request_date"></span>
                                             </td>
                                             <td>
-                                                <span class="items">2</span>
+                                                <span class="items" t-esc="requisition_count.get(req.id, 0)"> </span>
                                             </td>
                                             <td>
                                                 <span class="badge high" t-esc="req.priority"

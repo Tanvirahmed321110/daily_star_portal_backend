@@ -19,17 +19,11 @@ class DashboardController(http.Controller):
 
         # all requisitions
         requisitions = request.env['local.purchase.requisition'].sudo().search(base_domain)
-        # requisition_count = {}
-        # for requisition in requisitions:
-        #     count = len(requisition.line_ids)
-        #     count = request.env["local.purchase.requisition.lines"].sudo().search_cout([("requisition_id", '=', requisition.id)])
-        #     requisition_count[requisition.id] = count
-        #     {
-        #         1 : 5,
-        #         2 : 7
-        #
-        #     }
-
+        requisition_count = {}
+        for requisition in requisitions:
+            count = request.env["local.purchase.requisition.line"].sudo().search_count([("requisition_id", '=', requisition.id)])
+            requisition_count[requisition.id] = count
+        print(requisition_count)
         # Forwarded
         forwarded_count = request.env['local.purchase.requisition'].sudo().search_count([
             *base_domain,
@@ -56,6 +50,7 @@ class DashboardController(http.Controller):
             'forwarded_count':forwarded_count,
             'approved_count': approved_count,
             'cancelled_count':cancelled_count,
+            'requisition_count':requisition_count,
         })
 
         return request.render('purchase_requisition_tds.portal_requisition_dashboard', values)

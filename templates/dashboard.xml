@@ -110,9 +110,11 @@
                             <div class="filter-right">
                                 <select id="statusFilter">
                                     <option value="">All Statuses</option>
-                                    <option value="Pending">Pending</option>
-                                    <option value="Approved">Approved</option>
-                                    <option value="Rejected">Rejected</option>
+                                    <t t-foreach="requisitions" t-as="req">
+                                        <option style="text-transform:capitalize" t-att-value="req.state">
+                                            <t t-esc="req.state"/>
+                                        </option>
+                                    </t>
                                 </select>
                             </div>
                         </div>
@@ -135,7 +137,9 @@
                             <tbody id="tableBody">
                                 <t t-if="requisitions and len(requisitions) > 0">
                                     <t t-foreach="requisitions" t-as="req">
-                                        <tr class="table-row">
+                                        <tr class="table-row"
+                                            t-attf-data-status="{{req.state}}"
+                                            t-attf-data-name="{{req.name}}">
                                             <td class="sl-th">
                                                 <span
                                                         style="font-size:12px;font-weight:600;color:var(--muted);">
@@ -149,11 +153,23 @@
                                                 <span class="req-date" t-esc="req.request_date"></span>
                                             </td>
                                             <td>
-                                                <span class="items" t-esc="requisition_count.get(req.id, 0)"> </span>
+                                                <span class="items" t-esc="requisition_count.get(req.id, 0)"></span>
                                             </td>
                                             <td>
-                                                <span class="badge high" t-esc="req.priority"
-                                                      style="text-transform:Capitalize"></span>
+                                                <span class="badge " style="text-transform:Capitalize">
+                                                    <t t-if="req.priority == 'high'">
+                                                        🔴
+                                                        <t t-esc="req.priority"/>
+                                                    </t>
+                                                    <t t-elif="req.priority == 'medium'">
+                                                        🟡
+                                                        <t t-esc="req.priority"/>
+                                                    </t>
+                                                    <t t-else="">
+                                                        🟢
+                                                        <t t-esc="req.priority"/>
+                                                    </t>
+                                                </span>
                                             </td>
                                             <td>
                                                 <span class="status-badge pending" style="text-transform:Capitalize">
@@ -161,7 +177,8 @@
                                                 </span>
                                             </td>
                                             <td style="text-align:center;">
-                                                <a t-attf-href="/dashboard/requisition_details/{{req.id}}" class="view-btn">
+                                                <a t-attf-href="/dashboard/requisition_details/{{req.id}}"
+                                                   class="view-btn">
                                                     View
                                                     <!-- Eye / View Icon -->
                                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
@@ -186,34 +203,44 @@
                                         <td colspan="7" style="padding:0;border:none;">
                                             <!-- DESIGN 4 -->
                                             <!-- DESIGN 1 -->
-                                                <div class="empty-1">
-                                                    <div class="e1-icon-wrap">
-                                                        <div class="e1-rings"></div>
-                                                        <div class="e1-doc">
-                                                            <div class="e1-lines">
-                                                                <div class="e1-line"></div>
-                                                                <div class="e1-line"></div>
-                                                                <div class="e1-line"></div>
-                                                            </div>
+                                            <div class="empty-1">
+                                                <div class="e1-icon-wrap">
+                                                    <div class="e1-rings"></div>
+                                                    <div class="e1-doc">
+                                                        <div class="e1-lines">
+                                                            <div class="e1-line"></div>
+                                                            <div class="e1-line"></div>
+                                                            <div class="e1-line"></div>
                                                         </div>
                                                     </div>
-                                                    <h3>No Requisitions Yet</h3>
-                                                    <p>You haven't submitted any purchase requisitions. Start by
-                                                        creating your first one.
-                                                    </p>
-                                                    <a href="/dashboard/requisition" class="btn-1">
-                                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                                                             stroke="currentColor" stroke-width="2.5">
-                                                            <line x1="12" y1="5" x2="12" y2="19"/>
-                                                            <line x1="5" y1="12" x2="19" y2="12"/>
-                                                        </svg>
-                                                        New Requisition
-                                                    </a>
                                                 </div>
+                                                <h3>No Requisitions Yet</h3>
+                                                <p>You haven't submitted any purchase requisitions. Start by
+                                                    creating your first one.
+                                                </p>
+                                                <a href="/dashboard/requisition" class="btn-1">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                                         stroke="currentColor" stroke-width="2.5">
+                                                        <line x1="12" y1="5" x2="12" y2="19"/>
+                                                        <line x1="5" y1="12" x2="19" y2="12"/>
+                                                    </svg>
+                                                    New Requisition
+                                                </a>
+                                            </div>
 
                                         </td>
                                     </tr>
                                 </t>
+
+                                <!-- Filter এ কিছু না পেলে এটা দেখাবে -->
+                                <tr id="emptyFilter" style="display:none;">
+                                    <td colspan="7" style="padding:0;border:none;">
+                                        <div class="empty-1">
+                                            <h3>No Results Found</h3>
+                                            <p>কোনো requisition এই filter এ পাওয়া যায়নি।</p>
+                                        </div>
+                                    </td>
+                                </tr>
 
                                 <!--                                <tr class="table-row">-->
                                 <!--                                    <td class="sl-th">-->
@@ -259,6 +286,59 @@
 
                 </div>
             </main>
+
+            <script>
+                // =============== For Status Filter
+                document.addEventListener('DOMContentLoaded', function () {
+
+                const searchInput = document.getElementById('searchInput');
+                const statusFilter = document.getElementById('statusFilter');
+                const emptyFilter = document.getElementById('emptyFilter');
+
+                // ✅ Duplicate Option Remove
+                const seen = new Set();
+                Array.from(statusFilter.options).forEach(option => {
+                if (option.value === '') return;
+                if (seen.has(option.value)) {
+                option.remove();
+                } else {
+                seen.add(option.value);
+                }
+                });
+
+                // ✅ Filter Function
+                function filterTable() {
+                const searchVal = searchInput ? searchInput.value.toLowerCase().trim() : '';
+                const statusVal = statusFilter.value.toLowerCase().trim();
+                const rows = document.querySelectorAll('#tableBody .table-row');
+
+                let visibleCount = 0;
+
+                rows.forEach(row => {
+                const name = (row.dataset.name || '').toLowerCase();
+                const status = (row.dataset.status || '').toLowerCase();
+
+                const matchSearch = searchVal === '' || name.includes(searchVal);
+                const matchStatus = statusVal === '' || status === statusVal;
+
+                if (matchSearch &amp;&amp; matchStatus) {
+                row.style.display = '';
+                visibleCount++;
+                } else {
+                row.style.display = 'none';
+                }
+                });
+
+                // ✅ কোনো row না থাকলে empty message দেখাও
+                if (emptyFilter) {
+                emptyFilter.style.display = visibleCount === 0 ? '' : 'none';
+                }
+                }
+
+                if (searchInput) searchInput.addEventListener('input', filterTable);
+                if (statusFilter) statusFilter.addEventListener('change', filterTable);
+                });
+            </script>
         </t>
     </template>
 </odoo>

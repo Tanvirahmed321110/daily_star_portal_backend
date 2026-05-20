@@ -255,6 +255,7 @@
     background: var(--light);
     outline: none;
     cursor: pointer;
+    text-transform: capitalize;
 }
 
 .filter-bar .filter-right {

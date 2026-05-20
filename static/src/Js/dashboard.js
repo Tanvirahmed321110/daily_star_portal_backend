@@ -6,16 +6,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const statusFilter = document.getElementById('statusFilter');
     const emptyFilter = document.getElementById('emptyFilter');
 
-    // // ✅ Duplicate Option Remove
-    // const seen = new Set();
-    // Array.from(statusFilter.options).forEach(option => {
-    //     if (option.value === '') return;
-    //     if (seen.has(option.value)) {
-    //         option.remove();
-    //     } else {
-    //         seen.add(option.value);
-    //     }
-    // });
 
     // ✅ Filter Function
     function filterTable() {
@@ -40,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // ✅ কোনো row না থাকলে empty message দেখাও
+    // Empty sms here
     if (emptyFilter) {
         emptyFilter.style.display = visibleCount === 0 ? '' : 'none';
     }}

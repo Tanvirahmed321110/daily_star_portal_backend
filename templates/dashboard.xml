@@ -4,7 +4,7 @@
         <t t-call="purchase_requisition_tds.custom_layout">
             <!--  css link   -->
             <link rel="stylesheet" type="text/css"
-                  href="/purchase_requisition_tds/static/src/css/pages.css"/>
+                  href="/purchase_requisition_tds/static/src/css/pages.css?v=1"/>
 
             <!--====================||  MAIN CONTENT  ||=================-->
             <main class="main">
@@ -106,7 +106,15 @@
                     <!--==================||   Filter Header Here  ||====================-->
                     <t t-if=" requisitions">
                         <div class="filter-bar">
-                            <input type="text" id="searchInput" placeholder="Search by SL number..."/>
+                            <div style="position:relative; display:inline-block; width:300px;">
+                                <svg style="position:absolute; right:12px; top:50%; transform:translateY(-50%); pointer-events:none;"
+                                    width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                    stroke="#999" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"/>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                                </svg>
+                                <input type="text" id="searchInput" placeholder="Search by SL number..." style="width:100%"/>
+                            </div>
                             <div class="filter-right">
                                 <select id="statusFilter">
                                     <option value="">All Statuses</option>
@@ -265,7 +273,7 @@
                 </div>
             </main>
 
-            <script src="../../../purchase_requisition_tds/static/src/js/dashboard.js"></script>
+            <script src="../../../purchase_requisition_tds/static/src/js/dashboard.js?v=1"></script>
         </t>
     </template>
 </odoo>

@@ -214,6 +214,12 @@
 .s-sub {
     display: none;
 }
+.js_error{
+    /* display: none; */
+}
+.js_error.active{
+    display: block;
+}
 
 /*================||  Filter Header  ||================*/
 .filter-bar {
@@ -255,6 +261,7 @@
     background: var(--light);
     outline: none;
     cursor: pointer;
+    text-transform: capitalize;
 }
 
 .filter-bar .filter-right {
@@ -360,15 +367,13 @@ tbody .table-row:hover {
     align-items: center;
     justify-content: center;
     width: 18px;
-    height: 18px;
-    /* border:2px solid var(--navy); */
-    /* background-color: var(--light); */
+    height: 16px;
     border-radius: 50%;
     font-size: 11px;
-    line-height: 1;
+    line-height: 1.2;
     font-weight: 600;
     background-color: var(--accent);
-    color: white
+    color: white;
 }
 
 .table-card .badge {
@@ -423,8 +428,8 @@ tbody .table-row:hover {
     background: var(--light);
     border: 1px solid var(--border);
     color: var(--blue);
-    padding: 8px 12px;
-    border-radius: 7px;
+    padding: 8px 10px;
+    border-radius: 6px;
     font-size: 12px;
     font-weight: 600;
     text-decoration: none;

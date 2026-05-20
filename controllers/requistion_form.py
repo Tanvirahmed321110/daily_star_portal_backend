@@ -26,7 +26,7 @@ class RequisitionPortal(http.Controller):
         ]
 
         values.update({
-            'sl_number' : requisition.name or 'Emptyt',
+            'sl_number' : requisition.name or 'Empty',
             'products': products,
             'name': name,
             'today': date.today().strftime('%Y-%m-%d'),
@@ -56,6 +56,10 @@ class RequisitionPortal(http.Controller):
             'priority': priority,
             'requisitioned_by': request.env.user.id,
             'request_date': request_date,
+
+            'department_id': employee.department_id.id if employee else False,
+            'designation': employee.job_title if employee else '',
+            'hr_id': employee.barcode if employee else '',
         })
 
         # ================= LINE DATA =================
@@ -83,7 +87,6 @@ class RequisitionPortal(http.Controller):
                 'required_qty': float(quantities[i] or 0),
                 'required_on': required_dates[i] or False,
                 'remarks': remarks_list[i] or '',
-
             }))
 
         # ================= WRITE LINES =================

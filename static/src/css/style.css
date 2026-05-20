@@ -59,7 +59,7 @@ body::-webkit-scrollbar-track {
 }
 
 body::-webkit-scrollbar-thumb {
-    background: var(--text);
+    background: var(--navy);
 }
 
 body::-webkit-scrollbar-thumb:hover {
@@ -909,6 +909,11 @@ main{
     color: var(--error);
 }
 
+.dashboard-btn:hover svg {
+    animation: none !important;
+    transform: none !important;
+    transition: none !important;
+}
 
 
 

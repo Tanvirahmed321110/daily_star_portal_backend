@@ -175,6 +175,10 @@
                     </form>
                 </div>
             </main>
+
+
+            <!--    Javascript Links Here     -->
+            <script src="../../../purchase_requisition_tds/static/src/js/app.js"></script>
         </t>
     </template>
 </odoo>

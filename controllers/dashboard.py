@@ -16,14 +16,17 @@ class DashboardController(BasePortalController,http.Controller):
         ], limit=1)
         name = employee.name or ''
 
-        requisition = request.env['local.purchase.requisition'].sudo().search([], limit=1)
+
+        requisitions = request.env['local.purchase.requisition'].sudo().search([
+            ('create_uid', '=', user.id)
+        ])
         products = request.env['product.product'].sudo().search([])
 
         values.update({
-            'sl_number' : requisition.name,
             'products': products,
             'name': name,
             'today': date.today().strftime('%Y-%m-%d'),
+            'requisitions':requisitions,
         })
 
         return request.render('purchase_requisition_tds.portal_requisition_dashboard', values)

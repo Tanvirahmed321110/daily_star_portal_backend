@@ -7,554 +7,216 @@
                   href="/purchase_requisition_tds/static/src/css/pages.css"/>
 
             <!--====================||  MAIN CONTENT  ||=================-->
-           <main class="main">
+            <main class="main">
                 <div class="container">
-                <div class="page-header">
-                    <!-- page header here -->
-                    <h1 class="page-title">
-                        <span>Requisition Dashboard</span>
-                    </h1>
-                    <div>
-                        <a href="/dashboard/requisition" class="new-req-btn btn btn-primary">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="12" y1="5" x2="12" y2="19"></line>
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                            </svg>
-                            New Requisition
-                        </a>
+                    <div class="page-header">
+                        <!-- page header here -->
+                        <h1 class="page-title">
+                            <span>Requisition Dashboard</span>
+                        </h1>
+                        <div>
+                            <a href="/dashboard/requisition" class="new-req-btn btn btn-primary">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                     stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                </svg>
+                                New Requisition
+                            </a>
+                        </div>
                     </div>
+
+                    <div class="summary-grid" id="summaryGrid">
+
+                        <!-- Total -->
+                        <div class="s-card total">
+                            <div class="s-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white"
+                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                </svg>
+                            </div>
+                            <div class="s-label">Total</div>
+                            <div class="s-value" t-esc="'%02d' % len(requisitions) if requisitions else '00'">12</div>
+                        </div>
+
+                        <!-- Pending -->
+                        <div class="s-card pending">
+                            <div class="s-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white"
+                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                </svg>
+                            </div>
+                            <div class="s-label">Forwarded</div>
+                            <div class="s-value" t-esc="'%02d' % forwarded_count if forwarded_count else '00'"></div>
+                        </div>
+
+                        <!-- Approved -->
+                        <div class="s-card approved">
+                            <div class="s-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white"
+                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="s-label">Approved</div>
+                            <div class="s-value" t-esc="'%02d' % approved_count if approved_count else '00'"></div>
+                        </div>
+
+                        <!-- Cancelled -->
+                        <div class="s-card rejected">
+                            <div class="s-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white"
+                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="15" y1="9" x2="9" y2="15"></line>
+                                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                                </svg>
+                            </div>
+                            <div class="s-label">Cancelled</div>
+                            <div class="s-value" t-esc="'%02d' % cancelled_count if cancelled_count else '00'"></div>
+                        </div>
+                    </div>
+
+                    <!--==================||  User Information Here  ||====================-->
+                    <!-- <div class="user-card">
+                        <div class="user-avatar">
+                            <img src="https://lh3.googleusercontent.com/a/ACg8ocLiFW0fYS0vL3mAnqt2sQMgamQjc5RYvbjADXkbHQHgW0VXriJi=s192-c-mo"
+                                alt="user">
+                        </div>
+                        <div class="user-details">
+                            <div class="user-field"><label>Full Name</label>
+                                <div class="value">Fahim Hossain</div>
+                            </div>
+                            <div class="user-field"><label>Designation</label>
+                                <div class="value">Jr. Developer</div>
+                            </div>
+                            <div class="user-field"><label>Department</label>
+                                <div class="value">Operations</div>
+                            </div>
+                            <div class="user-field"><label>HR ID</label>
+                                <div class="value id">HR-2024-0142</div>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <!--==================||   Filter Header Here  ||====================-->
+                    <div class="filter-bar">
+                        <input type="text" id="searchInput" placeholder="Search by SL number..."/>
+                        <div class="filter-right">
+                            <select id="statusFilter">
+                                <option value="">All Statuses</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Approved">Approved</option>
+                                <option value="Rejected">Rejected</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!--==================||  Requisition History Table  Here  ||====================-->
+                    <div class="table-card">
+                        <table style="width:100%;border-collapse:collapse;">
+                            <thead>
+                                <tr class="table-header-row">
+                                    <th class="sl-th">#</th>
+                                    <th>SL Number</th>
+                                    <th>Date</th>
+                                    <th>Items</th>
+                                    <th>Priority</th>
+                                    <th>Status</th>
+                                    <th style="text-align: center;">View</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                                <t t-foreach="requisitions" t-as="req" >
+                                    <tr class="table-row">
+                                    <td class="sl-th">
+                                        <span
+                                                style="font-size:12px;font-weight:600;color:var(--muted);">
+                                            <t t-esc="req_index + 1"/>.
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="sl-num" t-esc="req.name"></span>
+                                    </td>
+                                    <td>
+                                        <span class="req-date" t-esc="req.request_date"></span>
+                                    </td>
+                                    <td>
+                                        <span class="items">2</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge high" t-esc="req.priority" style="text-transform:Capitalize"></span>
+                                    </td>
+                                    <td>
+                                        <span class="status-badge pending" style="text-transform:Capitalize"><t t-esc="req.state"/></span>
+                                    </td>
+                                    <td style="text-align:center;">
+                                        <a href="requisition_details.html" class="view-btn">
+                                            View
+                                            <!-- Eye / View Icon -->
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                                 stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                                                 stroke-linejoin="round">
+
+                                                <!-- Eye Shape -->
+                                                <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/>
+
+                                                <!-- Eye Ball -->
+                                                <circle cx="12" cy="12" r="3"/>
+                                            </svg>
+                                        </a>
+                                    </td>
+                                </tr>
+                                </t>
+
+<!--                                <tr class="table-row">-->
+<!--                                    <td class="sl-th">-->
+<!--                                        <span-->
+<!--                                                style="font-family:'DM Mono',monospace;font-size:12px;color:var(&#45;&#45;muted);">-->
+<!--                                            02-->
+<!--                                        </span>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <span class="sl-num">REQ-2026-00831</span>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <span class="req-date">2026-05-15</span>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <span class="items">2</span>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <span class="badge medium">🟡 Medium</span>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <span class="status-badge approved">Approved</span>-->
+<!--                                    </td>-->
+<!--                                    <td style="text-align:center;">-->
+<!--                                        <a href="view.html?sl=REQ-2026-00831" class="view-btn">-->
+<!--                                            View-->
+<!--                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"-->
+<!--                                                 stroke="currentColor" stroke-width="2.2" stroke-linecap="round"-->
+<!--                                                 stroke-linejoin="round">-->
+
+<!--                                                &lt;!&ndash; Eye Shape &ndash;&gt;-->
+<!--                                                <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/>-->
+
+<!--                                                &lt;!&ndash; Eye Ball &ndash;&gt;-->
+<!--                                                <circle cx="12" cy="12" r="3"/>-->
+<!--                                            </svg>-->
+<!--                                        </a>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
-
-                <div class="summary-grid" id="summaryGrid">
-                    <div class="s-card total">
-                        <div class="s-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white"
-                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                <polyline points="14 2 14 8 20 8"></polyline>
-                            </svg>
-                        </div>
-                        <div class="s-label">Total</div>
-                        <div class="s-value" t-esc="'%02d' % len(requisitions) if requisitions else '00'">12</div>
-                    </div>
-                    <div class="s-card pending">
-                        <div class="s-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white"
-                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <polyline points="12 6 12 12 16 14"></polyline>
-                            </svg>
-                        </div>
-                        <div class="s-label">Forwarded</div>
-                        <div class="s-value">03</div>
-                    </div>
-                    <div class="s-card approved">
-                        <div class="s-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white"
-                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
-                        </div>
-                        <div class="s-label">Approved</div>
-                        <div class="s-value">06</div>
-                    </div>
-                    <div class="s-card rejected">
-                        <div class="s-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white"
-                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="15" y1="9" x2="9" y2="15"></line>
-                                <line x1="9" y1="9" x2="15" y2="15"></line>
-                            </svg>
-                        </div>
-                        <div class="s-label">Cancelled</div>
-                        <div class="s-value">03</div>
-                    </div>
-                </div>
-
-                <!--==================||  User Information Here  ||====================-->
-                <!-- <div class="user-card">
-                    <div class="user-avatar">
-                        <img src="https://lh3.googleusercontent.com/a/ACg8ocLiFW0fYS0vL3mAnqt2sQMgamQjc5RYvbjADXkbHQHgW0VXriJi=s192-c-mo"
-                            alt="user">
-                    </div>
-                    <div class="user-details">
-                        <div class="user-field"><label>Full Name</label>
-                            <div class="value">Fahim Hossain</div>
-                        </div>
-                        <div class="user-field"><label>Designation</label>
-                            <div class="value">Jr. Developer</div>
-                        </div>
-                        <div class="user-field"><label>Department</label>
-                            <div class="value">Operations</div>
-                        </div>
-                        <div class="user-field"><label>HR ID</label>
-                            <div class="value id">HR-2024-0142</div>
-                        </div>
-                    </div>
-                </div> -->
-
-                <!--==================||   Filter Header Here  ||====================-->
-                <div class="filter-bar">
-                    <input type="text" id="searchInput" placeholder="Search by SL number..."/>
-                    <div class="filter-right">
-                        <select id="statusFilter">
-                            <option value="">All Statuses</option>
-                            <option value="Pending">Pending</option>
-                            <option value="Approved">Approved</option>
-                            <option value="Rejected">Rejected</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!--==================||  Requisition History Table  Here  ||====================-->
-                <div class="table-card">
-                    <table style="width:100%;border-collapse:collapse;">
-                        <thead>
-                            <tr class="table-header-row">
-                                <th class="sl-th">#</th>
-                                <th>SL Number</th>
-                                <th>Date</th>
-                                <th>Items</th>
-                                <th>Priority</th>
-                                <th>Status</th>
-                                <th style="text-align: center;">View</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableBody">
-                            <tr class="table-row">
-                                <td class="sl-th">
-                                    <span
-                                            style="font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);">
-                                        01
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="sl-num">REQ-2026-00847</span>
-                                </td>
-                                <td>
-                                    <span class="req-date">2026-05-19</span>
-                                </td>
-                                <td>
-                                    <span class="items">2</span>
-                                </td>
-                                <td>
-                                    <span class="badge high">🟢 High</span>
-                                </td>
-                                <td>
-                                    <span class="status-badge pending">Pending</span>
-                                </td>
-                                <td style="text-align:center;">
-                                    <a href="requisition_details.html" class="view-btn">
-                                        View
-                                        <!-- Eye / View Icon -->
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                                             stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
-                                             stroke-linejoin="round">
-
-                                            <!-- Eye Shape -->
-                                            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/>
-
-                                            <!-- Eye Ball -->
-                                            <circle cx="12" cy="12" r="3"/>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-
-                            <tr class="table-row">
-                                <td class="sl-th">
-                                    <span
-                                            style="font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);">
-                                        02
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="sl-num">REQ-2026-00831</span>
-                                </td>
-                                <td>
-                                    <span class="req-date">2026-05-15</span>
-                                </td>
-                                <td>
-                                    <span class="items">2</span>
-                                </td>
-                                <td>
-                                    <span class="badge medium">🟡 Medium</span>
-                                </td>
-                                <td>
-                                    <span class="status-badge approved">Approved</span>
-                                </td>
-                                <td style="text-align:center;">
-                                    <a href="view.html?sl=REQ-2026-00831" class="view-btn">
-                                        View
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                                             stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
-                                             stroke-linejoin="round">
-
-                                            <!-- Eye Shape -->
-                                            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/>
-
-                                            <!-- Eye Ball -->
-                                            <circle cx="12" cy="12" r="3"/>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-
-                            <tr class="table-row">
-                                <td class="sl-th">
-                                    <span
-                                            style="font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);">
-                                        03
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="sl-num">REQ-2026-00819</span>
-                                </td>
-                                <td>
-                                    <span class="req-date">2026-05-10</span>
-                                </td>
-                                <td>
-                                    <span class="items">2</span>
-                                </td>
-                                <td>
-                                    <span class="badge low">🔴 Low</span>
-                                </td>
-                                <td>
-                                    <span class="status-badge approved">Approved</span>
-                                </td>
-                                <td style="text-align:center;">
-                                    <a href="view.html?sl=REQ-2026-00819" class="view-btn">
-                                        View
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                                             stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
-                                             stroke-linejoin="round">
-
-                                            <!-- Eye Shape -->
-                                            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/>
-
-                                            <!-- Eye Ball -->
-                                            <circle cx="12" cy="12" r="3"/>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-
-                            <tr class="table-row">
-                                <td class="sl-th">
-                                    <span
-                                            style="font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);">
-                                        04
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="sl-num">REQ-2026-00804</span>
-                                </td>
-                                <td>
-                                    <span class="req-date">2026-05-07</span>
-                                </td>
-                                <td>
-                                    <span class="items">2</span>
-                                </td>
-                                <td>
-                                    <span class="badge high">🟢 High</span>
-                                </td>
-                                <td>
-                                    <span class="status-badge rejected">Rejected</span>
-                                </td>
-                                <td style="text-align:center;">
-                                    <a href="view.html?sl=REQ-2026-00804" class="view-btn">
-                                        View
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                                             stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
-                                             stroke-linejoin="round">
-
-                                            <!-- Eye Shape -->
-                                            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/>
-
-                                            <!-- Eye Ball -->
-                                            <circle cx="12" cy="12" r="3"/>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-
-                            <tr class="table-row">
-                                <td class="sl-th">
-                                    <span
-                                            style="font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);">
-                                        05
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="sl-num">REQ-2026-00791</span>
-                                </td>
-                                <td>
-                                    <span class="req-date">2026-05-03</span>
-                                </td>
-                                <td>
-                                    <span class="items">2</span>
-                                </td>
-                                <td>
-                                    <span class="badge medium">🟡 Medium</span>
-                                </td>
-                                <td>
-                                    <span class="status-badge approved">Approved</span>
-                                </td>
-                                <td style="text-align:center;">
-                                    <a href="view.html?sl=REQ-2026-00791" class="view-btn">
-                                        View
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                                             stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
-                                             stroke-linejoin="round">
-
-                                            <!-- Eye Shape -->
-                                            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/>
-
-                                            <!-- Eye Ball -->
-                                            <circle cx="12" cy="12" r="3"/>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-
-                            <tr class="table-row">
-                                <td class="sl-th">
-                                    <span
-                                            style="font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);">
-                                        06
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="sl-num">REQ-2026-00775</span>
-                                </td>
-                                <td>
-                                    <span class="req-date">2026-04-28</span>
-                                </td>
-                                <td>
-                                    <span class="items">2</span>
-                                </td>
-                                <td>
-                                    <span class="badge low">🟢 Low</span>
-                                </td>
-                                <td>
-                                    <span class="status-badge pending">Pending</span>
-                                </td>
-                                <td style="text-align:center;">
-                                    <a href="view.html?sl=REQ-2026-00775" class="view-btn">
-                                        View
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                                             stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
-                                             stroke-linejoin="round">
-
-                                            <!-- Eye Shape -->
-                                            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/>
-
-                                            <!-- Eye Ball -->
-                                            <circle cx="12" cy="12" r="3"/>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-
-                            <tr class="table-row">
-                                <td class="sl-th">
-                                    <span
-                                            style="font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);">
-                                        07
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="sl-num">REQ-2026-00762</span>
-                                </td>
-                                <td>
-                                    <span class="req-date">2026-04-22</span>
-                                </td>
-                                <td>
-                                    <span class="items">2</span>
-                                </td>
-                                <td>
-                                    <span class="badge high">🟢 High</span>
-                                </td>
-                                <td>
-                                    <span class="status-badge approved">Approved</span>
-                                </td>
-                                <td style="text-align:center;">
-                                    <a href="view.html?sl=REQ-2026-00762" class="view-btn">
-                                        View
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                                             stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
-                                             stroke-linejoin="round">
-
-                                            <!-- Eye Shape -->
-                                            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/>
-
-                                            <!-- Eye Ball -->
-                                            <circle cx="12" cy="12" r="3"/>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-
-                            <tr class="table-row">
-                                <td class="sl-th">
-                                    <span
-                                            style="font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);">
-                                        08
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="sl-num">REQ-2026-00748</span>
-                                </td>
-                                <td>
-                                    <span class="req-date">2026-04-18</span>
-                                </td>
-                                <td>
-                                    <span class="items">2</span>
-                                </td>
-                                <td>
-                                    <span class="badge medium">🟡 Medium</span>
-                                </td>
-                                <td>
-                                    <span class="status-badge rejected">Rejected</span>
-                                </td>
-                                <td style="text-align:center;">
-                                    <a href="view.html?sl=REQ-2026-00748" class="view-btn">
-                                        View
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                                             stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
-                                             stroke-linejoin="round">
-
-                                            <!-- Eye Shape -->
-                                            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/>
-
-                                            <!-- Eye Ball -->
-                                            <circle cx="12" cy="12" r="3"/>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr class="table-row">
-                                <td class="sl-th">
-                                    <span
-                                            style="font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);">
-                                        08
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="sl-num">REQ-2026-00748</span>
-                                </td>
-                                <td>
-                                    <span class="req-date">2026-04-18</span>
-                                </td>
-                                <td>
-                                    <span class="items">2</span>
-                                </td>
-                                <td>
-                                    <span class="badge medium">🟡 Medium</span>
-                                </td>
-                                <td>
-                                    <span class="status-badge rejected">Rejected</span>
-                                </td>
-                                <td style="text-align:center;">
-                                    <a href="view.html?sl=REQ-2026-00748" class="view-btn">
-                                        View
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                                             stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
-                                             stroke-linejoin="round">
-
-                                            <!-- Eye Shape -->
-                                            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/>
-
-                                            <!-- Eye Ball -->
-                                            <circle cx="12" cy="12" r="3"/>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr class="table-row">
-                                <td class="sl-th">
-                                    <span
-                                            style="font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);">
-                                        08
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="sl-num">REQ-2026-00748</span>
-                                </td>
-                                <td>
-                                    <span class="req-date">2026-04-18</span>
-                                </td>
-                                <td>
-                                    <span class="items">2</span>
-                                </td>
-                                <td>
-                                    <span class="badge medium">🟡 Medium</span>
-                                </td>
-                                <td>
-                                    <span class="status-badge rejected">Rejected</span>
-                                </td>
-                                <td style="text-align:center;">
-                                    <a href="view.html?sl=REQ-2026-00748" class="view-btn">
-                                        View
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                                             stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
-                                             stroke-linejoin="round">
-
-                                            <!-- Eye Shape -->
-                                            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/>
-
-                                            <!-- Eye Ball -->
-                                            <circle cx="12" cy="12" r="3"/>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr class="table-row">
-                                <td class="sl-th">
-                                    <span
-                                            style="font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);">
-                                        08
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="sl-num">REQ-2026-00748</span>
-                                </td>
-                                <td>
-                                    <span class="req-date">2026-04-18</span>
-                                </td>
-                                <td>
-                                    <span class="items">2</span>
-                                </td>
-                                <td>
-                                    <span class="badge medium">🟡 Medium</span>
-                                </td>
-                                <td>
-                                    <span class="status-badge rejected">Rejected</span>
-                                </td>
-                                <td style="text-align:center;">
-                                    <a href="view.html?sl=REQ-2026-00748" class="view-btn">
-                                        View
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                                             stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
-                                             stroke-linejoin="round">
-
-                                            <!-- Eye Shape -->
-                                            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/>
-
-                                            <!-- Eye Ball -->
-                                            <circle cx="12" cy="12" r="3"/>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-            </div>
-           </main>
+            </main>
         </t>
     </template>
 </odoo>

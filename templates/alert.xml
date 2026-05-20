@@ -41,7 +41,7 @@
                             <span class="d1-v" style="color:var(--success)">⬤ Pending Review</span>
                         </div>
                     </div>
-                    <a style="width:100%" href="/requisition" class="d1-btn success">+ New Requisition</a>
+                    <a style="width:100%" href="/dashboard" class="d1-btn success">+ New Requisition</a>
                 </div>
 
                 <div id="d1-error" class="d1-card" style="display:none">
@@ -52,7 +52,7 @@
                         <div class="d1-err-item">Row #01 — Product not selected</div>
                         <div class="d1-err-item">Row #02 — Product not selected</div>
                     </div>
-                    <a href="/requisition" class="d1-btn error">← Go Back &amp; Fix</a>
+                    <a href="/dashboard" class="d1-btn error">← Go Back &amp; Fix</a>
                 </div>
             </div>
             </main>

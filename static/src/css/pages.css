@@ -233,10 +233,10 @@
 .filter-bar input[type="text"] {
     flex: 1;
     min-width: 180px;
-    max-width: 400px;
+    max-width: 330px;
     border: 1px solid var(--border);
     border-radius: 8px;
-    padding: 8px 14px;
+    padding: 12px 14px;
     font-family: 'Sora', sans-serif;
     font-size: 13px;
     color: var(--text);
@@ -248,7 +248,7 @@
 .filter-bar select {
     border: 1px solid var(--border);
     border-radius: 8px;
-    padding: 8px 14px;
+    padding: 11px 14px;
     font-family: 'Sora', sans-serif;
     font-size: 13px;
     color: var(--text);
@@ -670,6 +670,121 @@ tbody .table-row:hover {
     border-radius: 50%;
     background: var(--accent);
 }
+
+
+/* ============================================
+   DESIGN 1 — Floating Document with Pulse
+   ============================================ */
+.empty-1 {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 80px 40px;
+    padding-bottom:60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+.empty-1::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(45,77,181,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+}
+.empty-1::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: -40px;
+    width: 150px; height: 150px;
+    background: radial-gradient(circle, rgba(245,158,11,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+}
+.e1-icon-wrap {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 24px;
+}
+.e1-rings {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(45,77,181,0.15);
+    animation: e1-pulse 2s ease-out infinite;
+}
+.e1-rings::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(45,77,181,0.25);
+}
+@keyframes e1-pulse {
+    0% { transform: translate(-50%,-50%) scale(1); opacity:1; }
+    100% { transform: translate(-50%,-50%) scale(1.8); opacity:0; }
+}
+.e1-doc {
+    width: 44px; height: 54px;
+    background: linear-gradient(145deg, #f0f4ff, #e6eeff);
+    border-radius: 6px;
+    border: 1.5px solid var(--border);
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    animation: e1-float 3s ease-in-out infinite;
+    box-shadow: 0 8px 24px rgba(4,13,51,0.1);
+}
+.e1-doc::before {
+    content: '';
+    position: absolute;
+    top: 8px; right: -6px;
+    width: 14px; height: 14px;
+    background: linear-gradient(135deg, #e6eeff, #f0f4ff);
+    border: 1.5px solid var(--border);
+    border-radius: 3px 3px 0 3px;
+    clip-path: polygon(0 0, 100% 100%, 0 100%);
+}
+.e1-lines {
+    display: flex; flex-direction: column; gap: 5px;
+}
+.e1-line {
+    height: 3px; background: var(--border); border-radius: 2px;
+}
+.e1-line:nth-child(1) { width: 24px; }
+.e1-line:nth-child(2) { width: 18px; }
+.e1-line:nth-child(3) { width: 20px; }
+@keyframes e1-float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+.empty-1 h3 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 18px; font-weight: 700;
+    color: var(--navy); margin-bottom: 8px;
+    margin-top:32px;
+}
+.empty-1 p {
+    font-size: 13px; color: var(--muted);
+    line-height: 1.6; max-width: 260px; margin: 0 auto 24px;
+}
+.btn-1 {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--g-total);
+    color: white; font-size: 13px; font-weight: 600;
+    padding: 10px 22px; border-radius: 8px;
+    text-decoration: none; font-family: 'Sora', sans-serif;
+    box-shadow: 0 4px 14px rgba(4,13,51,0.25);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer; border: none;
+}
+.btn-1:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(4,13,51,0.3); }
+
+
 
 
 

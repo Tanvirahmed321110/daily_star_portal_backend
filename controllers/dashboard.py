@@ -1,14 +1,14 @@
 from odoo import http
 from odoo.http import request
 from datetime import date
-from .base import BasePortalController
+from .base import _get_user_data
 
 
-class DashboardController(BasePortalController,http.Controller):
+class DashboardController(http.Controller):
     @http.route('/dashboard', type='http', auth='user', website=True, methods=['GET', 'POST'])
     def requisition_form(self, **kw):
         # import from base
-        values = self._get_user_data()
+        values = _get_user_data()
 
         user = request.env.user
         employee = request.env['hr.employee'].sudo().search([
@@ -19,6 +19,17 @@ class DashboardController(BasePortalController,http.Controller):
 
         # all requisitions
         requisitions = request.env['local.purchase.requisition'].sudo().search(base_domain)
+        # requisition_count = {}
+        # for requisition in requisitions:
+        #     count = len(requisition.line_ids)
+        #     count = request.env["local.purchase.requisition.lines"].sudo().search_cout([("requisition_id", '=', requisition.id)])
+        #     requisition_count[requisition.id] = count
+        #     {
+        #         1 : 5,
+        #         2 : 7
+        #
+        #     }
+
         # Forwarded
         forwarded_count = request.env['local.purchase.requisition'].sudo().search_count([
             *base_domain,
@@ -35,7 +46,7 @@ class DashboardController(BasePortalController,http.Controller):
             ('state', '=', 'approved')
         ])
         cancelled_count = request.env['local.purchase.requisition'].sudo().search_count(base_domain + [('state', '=', 'cancelled')])
-        # products = request.env['product.product'].sudo().search([])
+
 
         values.update({
             # 'products': products,

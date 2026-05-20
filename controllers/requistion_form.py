@@ -26,7 +26,7 @@ class RequisitionPortal(http.Controller):
         ]
 
         values.update({
-            'sl_number' : requisition.name or 'Emptyt',
+            'sl_number' : requisition.name or 'Empty',
             'products': products,
             'name': name,
             'today': date.today().strftime('%Y-%m-%d'),

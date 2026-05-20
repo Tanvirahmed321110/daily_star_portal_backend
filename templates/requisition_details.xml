@@ -30,7 +30,7 @@
                         <div class="user-mini">
                             <div class="user-mini-img">
                                 <img t-att-src="image_data_uri(employee_image)"
-                                                     alt="user image"/>
+                                     alt="user image"/>
                             </div>
                             <div class="user-mini-info">
                                 <div class="user-mini-name" t-esc="name">Fahim Hossain</div>
@@ -76,7 +76,8 @@
                             <!--  Total Items  -->
                             <div class="meta-item">
                                 <div class="meta-label">Total Items</div>
-                                <div class="meta-value">03</div>
+                                <div class="meta-value"
+                                     t-esc="'%02d' % len(requisition_lines) if requisition_lines else '00'"></div>
                             </div>
 
                             <!--  Hr ID -->
@@ -85,7 +86,7 @@
                                 <div class="meta-value" t-esc="hr_id"></div>
                             </div>
 
-                             <!--  Empty Div For layout  -->
+                            <!--  Empty Div For layout  -->
                             <div></div>
                             <div></div>
                         </div>
@@ -102,70 +103,64 @@
                         <table class="prod-table">
                             <thead>
                                 <tr>
-                                    <th style="width:50px">#</th>
+                                    <th style="width:60px">#</th>
                                     <th>Product</th>
-                                    <th style="width:80px">Qty</th>
-                                    <th style="width:130px">Required On</th>
+                                    <th style="width:100px">Qty</th>
+                                    <th style="width:150px">Required On</th>
                                     <th>Remarks</th>
                                 </tr>
                             </thead>
                             <tbody id="productsBody">
-                                <tr>
-                                    <td>
-                                        <span class="prod-num">01</span>
-                                    </td>
-                                    <td>
-                                        <div class="prod-name">HP LaserJet Toner</div>
-                                        <div class="prod-category">Office Supplies</div>
-                                    </td>
-                                    <td>
-                                        <span class="qty-chip">2</span>
-                                    </td>
-                                    <td>
-                                        <span class="date-val">2026-05-25</span>
-                                    </td>
-                                    <td>
-                                        <span class="remarks-val">Black toner only</span>
-                                    </td>
-                                </tr>
+                                <t t-foreach="requisition_lines" t-as="line">
+                                    <tr>
+                                        <td>
+                                            <span class="prod-num"><t t-esc="line_index + 1"/>.</span>
+                                        </td>
+                                        <td>
+                                            <div class="prod-name">
+                                                <t t-if="line.product_id">
+                                                    <t t-esc="line.product_id.name"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <t t-esc="line.description or '-'"/>
+                                                </t>
+                                            </div>
+                                            <!--   <div class="prod-category">IT Hardware</div>-->
+                                        </td>
 
-                                <tr>
-                                    <td>
-                                        <span class="prod-num">02</span>
-                                    </td>
-                                    <td>
-                                        <div class="prod-name">Wireless Keyboard</div>
-                                        <div class="prod-category">IT Hardware</div>
-                                    </td>
-                                    <td>
-                                        <span class="qty-chip">5</span>
-                                    </td>
-                                    <td>
-                                        <span class="date-val">2026-05-25</span>
-                                    </td>
-                                    <td>
-                                        <span class="remarks-val empty">No remarks</span>
-                                    </td>
-                                </tr>
+                                        <td>
+                                            <span class="qty-chip" t-esc="line.required_qty"></span>
+                                        </td>
 
-                                <tr>
-                                    <td>
-                                        <span class="prod-num">03</span>
-                                    </td>
-                                    <td>
-                                        <div class="prod-name">USB-C Hub</div>
-                                        <div class="prod-category">IT Hardware</div>
-                                    </td>
-                                    <td>
-                                        <span class="qty-chip">3</span>
-                                    </td>
-                                    <td>
-                                        <span class="date-val">2026-05-28</span>
-                                    </td>
-                                    <td>
-                                        <span class="remarks-val">7-port preferred</span>
-                                    </td>
-                                </tr>
+                                        <td>
+                                            <span class="date-val" t-esc="line.required_on">-</span>
+                                        </td>
+
+                                        <td>
+                                            <span class="remarks-val empty" t-esc="line.remarks">-</span>
+                                        </td>
+                                    </tr>
+                                </t>
+
+
+                                <!--                                <tr>-->
+                                <!--                                    <td>-->
+                                <!--                                        <span class="prod-num">03</span>-->
+                                <!--                                    </td>-->
+                                <!--                                    <td>-->
+                                <!--                                        <div class="prod-name">USB-C Hub</div>-->
+                                <!--                                        <div class="prod-category">IT Hardware</div>-->
+                                <!--                                    </td>-->
+                                <!--                                    <td>-->
+                                <!--                                        <span class="qty-chip">3</span>-->
+                                <!--                                    </td>-->
+                                <!--                                    <td>-->
+                                <!--                                        <span class="date-val">2026-05-28</span>-->
+                                <!--                                    </td>-->
+                                <!--                                    <td>-->
+                                <!--                                        <span class="remarks-val">7-port preferred</span>-->
+                                <!--                                    </td>-->
+                                <!--                                </tr>-->
                             </tbody>
                         </table>
                     </div>

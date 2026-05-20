@@ -16,6 +16,10 @@ class RequisitionDetailsController(http.Controller):
         # ], limit=1)
 
         requisition = request.env['local.purchase.requisition'].sudo().browse(req_id)
+        # requisition lines fetch
+        requisition_lines = request.env['local.purchase.requisition.line'].sudo().search([
+            ('requisition_id', '=', req_id)
+        ])
 
         breadcrumb = [
             {'name': 'Dashboard', 'url': '/dashboard'},
@@ -25,6 +29,7 @@ class RequisitionDetailsController(http.Controller):
         values.update({
             'breadcrumb': breadcrumb,
             'requisition': requisition,
+            'requisition_lines':requisition_lines,
         })
 
         return request.render('purchase_requisition_tds.portal_requisition_details',values)

@@ -273,7 +273,7 @@
                 </div>
             </main>
 
-            <script src="../../../purchase_requisition_tds/static/src/js/dashboard.js?v=1"></script>
+            <script src="../../../purchase_requisition_tds/static/src/js/dashboard.js?v=2"></script>
         </t>
     </template>
 </odoo>
